@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+    <head>
+        <title>CSPB pathway generator</title>
+    </head>
+    <body>
+        <nav>
+        <a href="{{ url_for('index') }}">Home</a>
+        <a href="{{ url_for('plan') }}">Plan</a>
+        <a href="{{ url_for('contact') }}">Contact Us</a>
+        <a href="{{ url_for('about') }}">About This Project</a>
+        <a href="{{ url_for('updates') }}">Blog and Updates</a>
+        </nav>
+        <hr>
+        <h1>Hello, {{ user.username }}!</h1>
+        <h3>Welcome to the CSPB pathway generator!</h3>
+        <p>Prospective and current students need class information to make a plan for finishing the program. 
+            They should have access to information that allows them to take the courses they need, the electives that align with their interests, 
+            and those that are balanced against their work schedule.
+        </p>
+    </body>
+</html>
