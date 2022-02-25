@@ -1,5 +1,13 @@
 # CSPB-Pathways
 
+Installing flask and creating a virtual environment
+clone repository to your machine
+$ cd to repository
+$ python3 -m venv venv
+This creates the virtual environment
+Install flask
+You can install all packages withe the requirements.txt file
+
 Project Title: 
 
 CSPB pathway generator
