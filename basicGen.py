@@ -35,11 +35,6 @@ def basicAlg(input):
     return take
 
 
-input = [1300, 2824, 2270, 3104, 3702, 2400, 3308, 4122, 3403, 4502]
-result = basicAlg(input)
-print(result)
-
-
 
           
 
