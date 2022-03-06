@@ -2,10 +2,7 @@ from flask import Flask, render_template, request
 import json
 
 from basicGen import basicAlg
-
-
-app = Flask(__name__)
-
+from reviews import *
 
 # class_dict = {
 #     '1': 'CSPB 1300',
@@ -22,6 +19,9 @@ app = Flask(__name__)
 #     '12': 'CSPB 2820',
 #     '13': 'CSPB 3403'
 # }
+
+app = Flask(__name__)
+
 
 class_dict = {
     '1': 1300,
@@ -53,6 +53,15 @@ def index():
         return {"class to take next semester:": json.dumps(to_take)}
 
     return render_template('index.html')
+
+@app.route('/reviews', methods=['GET', 'POST'])
+def about():
+    if request.method == 'POST':
+        selected_list = request.form.getlist('mycheckbox')
+        reviews = review_printer(selected_list)
+        return reviews
+    else:
+        return render_template('reviews.html')
 
 
 if __name__ == "__main__":
