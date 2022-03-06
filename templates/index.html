@@ -1,22 +1,27 @@
-<!doctype html>
-<html>
-    <head>
-        <title>CSPB pathway generator</title>
-    </head>
-    <body>
-        <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('plan') }}">Plan</a>
-        <a href="{{ url_for('contact') }}">Contact Us</a>
-        <a href="{{ url_for('about') }}">About This Project</a>
-        <a href="{{ url_for('updates') }}">Blog and Updates</a>
-        </nav>
-        <hr>
-        <h1>Hello, {{ user.username }}!</h1>
-        <h3>Welcome to the CSPB pathway generator!</h3>
-        <p>Prospective and current students need class information to make a plan for finishing the program. 
-            They should have access to information that allows them to take the courses they need, the electives that align with their interests, 
-            and those that are balanced against their work schedule.
-        </p>
-    </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <form method="POST" action="/">
+        CSPB 1300 <input type="checkbox" value="1" name="mycheckbox">
+        CSPB 2824<input type="checkbox" value="2" name="mycheckbox">
+        CSPB 2270<input type="checkbox" value="3" name="mycheckbox">
+        CSPB 3104 <input type="checkbox" value="4" name="mycheckbox">
+        CSPB 2400<input type="checkbox" value="5" name="mycheckbox">
+        CSPB 3308<input type="checkbox" value="6" name="mycheckbox">
+        CSPB 3155 <input type="checkbox" value="7" name="mycheckbox">
+        CSPB 3702<input type="checkbox" value="8" name="mycheckbox">
+        CSPB 3022<input type="checkbox" value="9" name="mycheckbox">
+        CSPB 4122 <input type="checkbox" value="10" name="mycheckbox">
+        CSPB 4502<input type="checkbox" value="11" name="mycheckbox">
+        CSPB 2820<input type="checkbox" value="12" name="mycheckbox">
+        CSPB 3403<input type="checkbox" value="13" name="mycheckbox">
+        <input type="submit">
+    </form>
+</body>
 </html>
