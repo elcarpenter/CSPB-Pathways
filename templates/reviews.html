@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block body %}
+
     <form method="POST" action="/reviews">
         CSPB 1300 <input type="checkbox" value="1300" name="mycheckbox">
         CSPB 2824<input type="checkbox" value="2824" name="mycheckbox">
@@ -21,7 +15,13 @@
         CSPB 4502<input type="checkbox" value="4502" name="mycheckbox">
         CSPB 2820<input type="checkbox" value="2820" name="mycheckbox">
         CSPB 3403<input type="checkbox" value="3403" name="mycheckbox">
-        <input type="submit">
-    </form>
-</body>
-</html>
+    <input type="submit">
+
+
+    <br>
+    <h3>Reviews for the selected classes</h3>
+    {% for key, value in reviews.items() %}
+    <li>{{ key }} : {{ value }}
+    {% endfor %}
+
+{% endblock %}

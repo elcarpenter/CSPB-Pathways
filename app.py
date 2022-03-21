@@ -47,10 +47,7 @@ def index():
         # remaining_class_key = [new for new in class_dict.keys() if new not in selected_list]
         # remaining_class = [class_dict[x] for x in remaining_class_key]
         to_take = basicAlg(selected_class)
-        print(selected_class)
-        print(to_take)
-        # return {"class to take": to_take}
-        return {"class to take next semester:": json.dumps(to_take)}
+        return {"class to take next semester:": json.dumps(selected_list)}
 
     return render_template('index.html')
 
