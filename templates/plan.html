@@ -1,18 +1,7 @@
-<!doctype html>
-<html>
-    <head>
-        <title>CSPB pathway generator</title>
-    </head>
-    <body>
-        <nav>
-        <a href="{{ url_for('index') }}">Home</a>
-        <a href="{{ url_for('plan') }}">Plan</a>
-        <a href="{{ url_for('contact') }}">Contact Us</a>
-        <a href="{{ url_for('about') }}">About This Project</a>
-        <a href="{{ url_for('updates') }}">Blog and Updates</a>
-        </nav>
-        <hr>
+{% extends "base.html" %}
+{% block body %}
+
         <h1>Hello, {{ user.username }}!</h1>
         <h3>Please enter information below to start setting up your plan</h3>
-    </body>
-</html>
+
+{% endblock %}

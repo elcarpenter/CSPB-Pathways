@@ -3,8 +3,8 @@ from flask import render_template
 
 app = Flask(__name__)
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=["GET", "POST"])
+@app.route('/index', methods=["GET", "POST"])
 def index():
     user = {'username': 'Ryan'}
     return render_template('index.html', user=user)
@@ -42,4 +42,12 @@ def updates():
         }
     ]
     return render_template('updates.html', user=user, posts=posts)
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
+@app.errorhandler(500)
+def internal_server_error(e):
+    return render_template('500.html'), 500
 
