@@ -39,31 +39,31 @@ fourCredits = [CSPB1300, CSPB2270, CSPB3104, CSPB2400, CSPB3155, CSPB3753, CSPB3
 # This is just an alg to produce a single semesters schedule 
 # This just gives us something to play with when we are working with our GUI this week. 
 
-# TO DO 
-# Update Total Credits in main for loop 
-# Find way to access different semesters 
-# Find best way to organize course list 
-    # How can we sort unwanted electives out/prioritize others 
-    # What priority do we give required courses? 
-# Create a two-semester schedule 
 
-def basicAlg(input, inputHours, inputElectives, inputSemester):
+# TO DO and QUESTIONS TO ANSWER 
+# Create a two-semester schedule 
+# When electives we want to take are not being offered, do we delay graduation or take something else? 
+
+def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
     #courses, excluding 3122
-    courses = [1300, 2824, 2270, 3022, 2820, 3403, 3202, 3287, 3753, 4622, 3302, 3104, 2400, 3308, 3155, 3702, 4122, 4502]
+    courses = [1300, 2824, 2270, 3022, 2820, 3403, 3202, 3104, 2400, 3308, 3155, 3287, 3753, 4622, 3302, 3702, 4122, 4502]
     reqCourses = [1300, 2824, 2270, 3104, 2400, 3308, 3155] 
+    electives = [3022, 2820, 3403, 3202, 3287, 3753, 4622, 3302, 3702, 4122, 4502]
+    everySem = [1300, 2824, 2270, 3104, 2400, 3308, 3155, 4122, 3702, 4502]
     possible = [] 
 
     #by semester
-    summer2022 = [4122, 3702, 4502, 3287, 3202, 2820, 4622]
+    summer2022 = [4122, 3702, 4502, 3287, 3202, 2820, 4622, 3022]
     fall2022 = [4122, 3702, 4502, 3753, 3022, 3403, 4622, 3302]
     spring2023 = [4122, 3702, 4502, 3287, 3202, 2820]
     summer2023 = [4122, 3702, 4502, 3753, 3022, 3403, 4622, 3302] 
     fall2023 = [4122, 3702, 4502, 3287, 3202, 2820] 
     spring2024 = [4122, 3702, 4502, 3753, 3022, 3403]
-    
+
     # [summer2022, fall2022, spring2023, summer2023, fall2023, spring2024] 
-    # Nested arrays to get elective offering for each semester 
-    semesters = [[4122, 3702, 4502, 3287, 3202, 2820, 4622], 
+    # Nested arrays to get elective offering for each semester  
+    # semesters[0] = summer2022, semesters[1] = fall2022, etc. 
+    semesters = [[4122, 3702, 4502, 3287, 3202, 2820, 4622, 3022], 
                 [4122, 3702, 4502, 3753, 3022, 3403, 4622, 3302], 
                 [4122, 3702, 4502, 3287, 3202, 2820], 
                 [4122, 3702, 4502, 3753, 3022, 3403, 4622, 3302], 
@@ -96,18 +96,58 @@ def basicAlg(input, inputHours, inputElectives, inputSemester):
         return "Congratulations! You've finished the program."
 
 
+    #Here we need to make sure that we add the necessary electives to the input list
+    #to ensure that the user will be eligible to take Robotics, ML, or AI if desired 
+
+    #Machine Learning and Linear Algebra 
+    if 4622 in inputElectives and 2820 not in inputElectives:
+        if 2820 in dontWant:
+            return "If you want to take Machine Leanrning, you have to take Linear Algebra"
+        inputElectives.append(2820)
+    #ML and Data Science 
+    if 4622 in inputElectives and 3022 not in inputElectives:
+        if 3022 in dontWant:
+            return "If you want to take Machine Leanrning, you have to take Data Science"
+        inputElectives.append(3022)
+    #Robotics and Linear Algebra 
+    if 3302 in inputElectives and 2820 not in inputElectives:
+        if 2820 in dontWant:
+            return "If you want to take Robtoics, you have to take Linear Algebra"
+        inputElectives.append(2820)
+    #AI and Data Science 
+    if 3202 in inputElectives and 3022 not in inputElectives:
+        if 3022 in dontWant:
+            return "If you want to take Machine Leanrning, you have to take Data Science"
+        inputElectives.append(3022)
+    
+    electiveCredits = 0 
+    for course in inputElectives:
+        electiveCredits = electiveCredits + 3
+        if course in fourCredits:
+            electiveCredits = electiveCredits + 1 
+    
+    for course in electives:
+        if course not in inputElectives and course in input:
+            electiveCredits = electiveCredits + 3
+            if course in fourCredits:
+                electiveCredits = electiveCredits + 1 
+    
+    if electiveCredits > 21:
+        return "You've selected too many electives."
+        
+    
     take = [] 
     hours = 0
-
 
     for course in courses:
         if course not in input:
             if course in reqCourses:
                 if preReqChecker(input, take, course):
                     possible.append(course) 
-            if course in semesters[inputSemester]: 
+            if course in semesters[inputSemester] and course not in dontWant: 
                 if preReqChecker(input, take, course):
                     possible.append(course) 
+    
     
     for course in possible:
         if inputHours == 0: 
@@ -117,100 +157,178 @@ def basicAlg(input, inputHours, inputElectives, inputSemester):
                 hours = hours + 5 
                 inputHours = inputHours - 5
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
             elif course in ten and inputHours >= 10:
                 hours = hours + 10
                 inputHours = inputHours - 10
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and (coreq not in dontWant) and coreq not in input:
                             possible.append(coreq) 
             elif course in fifteen and inputHours >= 15:
                 hours = hours + 15
                 inputHours = inputHours - 15
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
             elif course in twenty and inputHours >= 20:
                 hours = hours + 20
                 inputHours = inputHours - 20 
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
-        elif course in reqCourses:
+
+    for course in possible:
+        if inputHours == 0: 
+            return take 
+        if course in reqCourses:
             if course in five and inputHours >= 5:
                 hours = hours + 5 
                 inputHours = inputHours - 5
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
             elif course in ten and inputHours >= 10:
                 hours = hours + 10
                 inputHours = inputHours - 10
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and (coreq not in dontWant) and coreq not in input:
                             possible.append(coreq) 
             elif course in fifteen and inputHours >= 15:
                 hours = hours + 15
                 inputHours = inputHours - 15
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
             elif course in twenty and inputHours >= 20:
                 hours = hours + 20
                 inputHours = inputHours - 20 
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
-        else:
+
+    for course in possible:
+        if inputHours == 0: 
+            return take 
+        if electiveCredits >= 19:
+            return take 
+        if course not in inputElectives and course not in reqCourses:
             if course in five and inputHours >= 5:
                 hours = hours + 5 
                 inputHours = inputHours - 5
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                electiveCredits = electiveCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                    electiveCredits = electiveCredits + 1 
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
             elif course in ten and inputHours >= 10:
                 hours = hours + 10
                 inputHours = inputHours - 10
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                electiveCredits = electiveCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                    electiveCredits = electiveCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and (coreq not in dontWant) and coreq not in input:
                             possible.append(coreq) 
             elif course in fifteen and inputHours >= 15:
                 hours = hours + 15
                 inputHours = inputHours - 15
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                electiveCredits = electiveCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                    electiveCredits = electiveCredits + 1
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
             elif course in twenty and inputHours >= 20:
                 hours = hours + 20
                 inputHours = inputHours - 20 
                 take.append(course)
+                totalCredits = totalCredits + 3 
+                electiveCredits = electiveCredits + 3 
+                if course in fourCredits:
+                    totalCredits = totalCredits + 1
+                    electiveCredits = electiveCredits + 1 
+                if totalCredits >= 45:
+                    return take
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
-                        if coreq not in possible and preReqChecker(input, take, coreq):
-                            possible.append(coreq)
+                        if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
+                            possible.append(coreq) 
     return take 
 
 
@@ -254,3 +372,4 @@ def preReqChecker(input, take, course):
         if 3104 in input and 3022 in input and 2820 in input:
             return True 
     return False 
+
