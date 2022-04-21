@@ -1,48 +1,14 @@
-'''
-# Currentyly unused, but want to save 
-# [0] == CREDITS, [1] == TIME, [2] == COREQS, [3] == PREREQS
-CSPB1300 = [4, 10, [], []] 
-CSPB2270 = [4, 15, [], [CSPB1300]] 
-CSPB2400 = [4, 20, [CSPB2270], []] 
-CSPB2824 = [3, 15, [CSPB1300], []] 
-CSPB2820 = [3, 10, [], [CSPB2824]] 
-CSPB3022 = [3, 20, [CSPB1300], []]
-CSPB3104 = [4, 20, [CSPB2270], [CSPB2824]]
-CSPB3112 = [1, 5, [], []]
-CSPB3155 = [4, 15, [], [CSPB2270]] 
-CSPB3202 = [3, 15, [], [CSPB2824, CSPB2270, CSPB3022]]
-CSPB3287 = [3, 10, [], [CSPB2270]] 
-CSPB3302 = [3, 15, [], [CSPB2820, CSPB2270, CSPB2824]]
-CSPB3308 = [3, 10, [CSPB2270], []]
-CSPB3403 = [4, 5, [], [CSPB2400]]
-CSPB3702 = [3, 5, [CSPB1300], []] 
-CSPB3753 = [4, 20, [], [CSPB2270]] 
-CSPB4122 = [3, 5, [CSPB1300, CSPB2824], []]
-CSPB4502 = [3, 5, [], [CSPB2270]]  
-CSPB4622 = [3, 15, [], [CSPB2824, CSPB2820, CSPB3104]] 
-
-
-
-AllCourses = [CSPB1300, CSPB2824, CSPB2270, CSPB3308, CSPB3155, CSPB2400, CSPB3104, 
-                CSPB3022, CSPB3202, CSPB2820, CSPB4622, CSPB3302, CSPB4502, CSPB4122, 
-                CSPB3702, CSPB3753, CSPB3287, CSPB3403, CSPB3112] 
-ReqCourses = [CSPB1300, CSPB2824, CSPB2270, CSPB3308, CSPB3155, CSPB2400, CSPB3104]
-Electives = [CSPB3022, CSPB3202, CSPB2820, CSPB4622, CSPB3302, CSPB4502, CSPB4122, CSPB3702, 
-                CSPB3753, CSPB3287, CSPB3403, CSPB3112]
-
-#Credit hours 
-oneCredit = [CSPB3112] 
-threeCredits = [CSPB2824, CSPB3308, CSPB3022, CSPB3202, CSPB2820, CSPB4622, CSPB3302, CSPB4502, CSPB4122, CSPB3702, CSPB3287]
-fourCredits = [CSPB1300, CSPB2270, CSPB3104, CSPB2400, CSPB3155, CSPB3753, CSPB3403] 
-''' 
-
-# This is just an alg to produce a single semesters schedule 
-# This just gives us something to play with when we are working with our GUI this week. 
-
 
 # TO DO and QUESTIONS TO ANSWER 
+# How to make sure they take all of the required classes 
+# Find way to access different semesters 
+# Find best way to organize course list 
+    # How can we sort unwanted electives out/prioritize others 
+    # What priority do we give required courses? 
 # Create a two-semester schedule 
 # When electives we want to take are not being offered, do we delay graduation or take something else? 
+# How to take of pre-reqs for wanted electives 
+    # EX: If someone wants 4622, but doesn't list 2820, how do we make sure it gets taken? 
 
 def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
     #courses, excluding 3122
@@ -151,7 +117,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
     
     for course in possible:
         if inputHours == 0: 
-            return take 
+            return take, totalCredits 
         if course in inputElectives:
             if course in five and inputHours >= 5:
                 hours = hours + 5 
@@ -161,7 +127,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -174,7 +140,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and (coreq not in dontWant) and coreq not in input:
@@ -187,7 +153,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -200,7 +166,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -208,7 +174,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
 
     for course in possible:
         if inputHours == 0: 
-            return take 
+            return take, totalCredits 
         if course in reqCourses:
             if course in five and inputHours >= 5:
                 hours = hours + 5 
@@ -218,7 +184,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -231,7 +197,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and (coreq not in dontWant) and coreq not in input:
@@ -244,7 +210,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -257,7 +223,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                 if course in fourCredits:
                     totalCredits = totalCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -265,9 +231,9 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
 
     for course in possible:
         if inputHours == 0: 
-            return take 
+            return take, totalCredits 
         if electiveCredits >= 19:
-            return take 
+            return take, totalCredits 
         if course not in inputElectives and course not in reqCourses:
             if course in five and inputHours >= 5:
                 hours = hours + 5 
@@ -279,7 +245,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                     totalCredits = totalCredits + 1
                     electiveCredits = electiveCredits + 1 
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -294,7 +260,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                     totalCredits = totalCredits + 1
                     electiveCredits = electiveCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and (coreq not in dontWant) and coreq not in input:
@@ -309,7 +275,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                     totalCredits = totalCredits + 1
                     electiveCredits = electiveCredits + 1
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
@@ -324,12 +290,12 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
                     totalCredits = totalCredits + 1
                     electiveCredits = electiveCredits + 1 
                 if totalCredits >= 45:
-                    return take
+                    return take, totalCredits 
                 if course in areCoReqs: 
                     for coreq in haveCoReqs:
                         if coreq not in possible and preReqChecker(input, take, coreq) and coreq not in dontWant and coreq not in input:
                             possible.append(coreq) 
-    return take 
+    return take, totalCredits 
 
 
 def preReqChecker(input, take, course):
@@ -372,4 +338,26 @@ def preReqChecker(input, take, course):
         if 3104 in input and 3022 in input and 2820 in input:
             return True 
     return False 
+    
+        #1300, 2824, 2270, 3104, 2400, 3308, 2820, 4502, 3302, 3702, 3022
+        #3155, 3403
+'''
+input = [1300, 2824, 2270, 3104, 3702, 2400, 4122] 
+inputHours = 25
+inputElectives = [] 
+dontWant = []
+inputSemester = [0,1,2,3]
+'''
 
+#print(basicAlg(input, inputHours, inputElectives, inputSemester, dontWant)) 
+
+def multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant): 
+    for sem in inputSemester:
+        classes, quit = basicAlg(input, inputHours, inputElectives, sem, dontWant)
+        for cspb in classes:
+            input.append(cspb)
+        print(classes) 
+        if quit >= 45:
+            return "That's the end!" 
+
+#print(multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)) 
