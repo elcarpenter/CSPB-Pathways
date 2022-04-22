@@ -58,7 +58,11 @@ class SemesterSchedule(db.Model):
     def __repr__(self):
         return '<SemesterSchedule{}>'.format(self.body)
 
+@login.user_loader
+def load_user(id):
+    return User.query.get(int(id))
 
-def init_db():
-    db.create_all()
+
+# def init_db():
+    # db.create_all()
 

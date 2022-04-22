@@ -11,7 +11,7 @@ from app.models import User, Review
 
 from basicGen import basicAlg
 from reviews import *
-from forms import LoginForm
+from app.forms import LoginForm
 from config import Config
 
 import json
