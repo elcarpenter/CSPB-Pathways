@@ -40,7 +40,7 @@ class Review(db.Model):
     review = db.Column(db.String(200))
     stars = db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
-    # user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
         return '<Review {}>'.format(self.classname)
