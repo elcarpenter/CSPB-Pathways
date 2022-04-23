@@ -18,7 +18,8 @@ migrate = Migrate(app, db)
 def create_tables():
     db.create_all()
 
-
+# This redirects to the login page if you are trying to access a
+# page you need to be logged into
 login = LoginManager(app)
 login.login_view = 'login'
 

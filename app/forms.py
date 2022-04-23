@@ -35,7 +35,7 @@ class ReviewForm(FlaskForm):
         'Class Number',
         [DataRequired()],
         choices=[
-            ('CSPB 1300', 'CSPB 1300'),
+            ('CSPB 1300', '1300'),
             ('CSPB 2824', '2824'),
             ('CSPB 2270', '2270'),
             ('CSPB 3104', '3104'),
