@@ -120,7 +120,7 @@ def reviews():
     reviews_all = Review.query.all()
     reviews_list = []
     for review in reviews_all: 
-        reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp))
+        reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp, review.user_id))
     if form.validate_on_submit():
     # if request.method == 'POST':
         # selected_list = request.form.getlist('mycheckbox')

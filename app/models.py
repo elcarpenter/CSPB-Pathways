@@ -63,6 +63,3 @@ def load_user(id):
     return User.query.get(int(id))
 
 
-# def init_db():
-    # db.create_all()
-

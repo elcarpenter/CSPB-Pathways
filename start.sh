@@ -2,6 +2,7 @@
 source path/to/folder/CSPB-Pathways/venv/bin/activate
 # sql database not set up yet
 # export DATABASE_URL="postgresql://localhost/kinsey
+# python3 -m venv venv
 cd path/to/folder/CSPB-Pathways
 source venv/bin/activate
 export FLASK_APP=planner.py
