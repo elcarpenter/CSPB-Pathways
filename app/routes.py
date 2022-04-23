@@ -19,22 +19,6 @@ import json
 import datetime
 
 
-class_dict = {
-    '1': 1300,
-    '2': 2824,
-    '3': 2270,
-    '4': 3104,
-    '5': 2400,
-    '6': 3308,
-    '7': 3155,
-    '8': 3702,
-    '9': 3022,
-    '10': 4122,
-    '11': 4502,
-    '12': 2820,
-    '13': 3403
-}
-
 
 # @login_required
 # @app.route decorators from Flask, the function becomes protected 
@@ -81,7 +65,11 @@ def contact():
     user = {'username': 'Ryan'}
     return render_template('contact.html', user=user)
 
+
+# @app.route decorators from Flask, the function becomes protected 
+# and will not allow access to users that are not authenticated
 @app.route('/updates')
+@login_required
 def updates():
     user = {'username': 'Ryan'}
     posts = [
@@ -116,10 +104,10 @@ def register():
 
 @app.route('/reviews', methods=['GET', 'POST'])
 def reviews():
-    # Default user id
+    # Default user id set to -1
     user_id = -1
 
-    # Get the id of the current user
+    # Get the id of the current user that is logged in
     if current_user.is_authenticated:
         user = current_user.username
         user_object = User.query.filter_by(username=user).first()
@@ -140,7 +128,7 @@ def reviews():
     else:
         return render_template('reviews.html', reviews=reviews_list, form=form)
 
-
+# Logs user out
 @app.route('/logout')
 def logout():
     logout_user()
@@ -148,7 +136,7 @@ def logout():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # recirect to home/index if user i slogged in
+    # redirect to home/index if user is logged in
     if current_user.is_authenticated:
         return redirect(url_for('index'))
     form = LoginForm()
