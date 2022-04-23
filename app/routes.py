@@ -102,8 +102,8 @@ def updates():
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
-    #if current_user.is_authenticated:
-        #return redirect(url_for('index'))
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
     form = RegistrationForm()
     if form.validate_on_submit():
         user = User(username=form.username.data, email=form.email.data)
@@ -116,25 +116,27 @@ def register():
 
 @app.route('/reviews', methods=['GET', 'POST'])
 def reviews():
+    # Default user id
+    user_id = -1
+
+    # Get the id of the current user
+    if current_user.is_authenticated:
+        user = current_user.username
+        user_object = User.query.filter_by(username=user).first()
+        user_id = user_object.return_id()
+
     form = ReviewForm()
     reviews_all = Review.query.all()
     reviews_list = []
     for review in reviews_all: 
         reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp, review.user_id))
     if form.validate_on_submit():
-    # if request.method == 'POST':
-        # selected_list = request.form.getlist('mycheckbox')
-        # reviews = review_printer(selected_list)
         ts = datetime.datetime.utcnow()
-        review = Review(classname=form.classname.data, hoursperweek=form.hoursPerWeek.data, review=form.review.data, stars=form.stars.data, timestamp=ts)
-        # v = classname=form.title.data
-        # v1 = hoursperweek=form.hoursPerWeek.data
-        # v2 = review=form.review.data
-        # v3 = stars=form.stars.data
-        # return str(str(v) + " " + str(v1) + " " + str(v2) + " " + str(v3))
+        review = Review(classname=form.classname.data, hoursperweek=form.hoursPerWeek.data, review=form.review.data, stars=form.stars.data, timestamp=ts, user_id=user_id)
         db.session.add(review)
         db.session.commit()
-        return render_template('reviews.html', reviews=reviews_list, form=form)
+        # redirect after posting review
+        return redirect(url_for('reviews'))
     else:
         return render_template('reviews.html', reviews=reviews_list, form=form)
 
