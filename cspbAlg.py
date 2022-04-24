@@ -10,6 +10,7 @@
 # How to take of pre-reqs for wanted electives 
     # EX: If someone wants 4622, but doesn't list 2820, how do we make sure it gets taken? 
 
+
 def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
     #courses, excluding 3122
     courses = [1300, 2824, 2270, 3022, 2820, 3403, 3202, 3104, 2400, 3308, 3155, 3287, 3753, 4622, 3302, 3702, 4122, 4502]
@@ -341,23 +342,26 @@ def preReqChecker(input, take, course):
     
         #1300, 2824, 2270, 3104, 2400, 3308, 2820, 4502, 3302, 3702, 3022
         #3155, 3403
-'''
-input = [1300, 2824, 2270, 3104, 3702, 2400, 4122] 
+
+input = [] 
 inputHours = 25
 inputElectives = [] 
 dontWant = []
 inputSemester = [0,1,2,3]
-'''
-
-#print(basicAlg(input, inputHours, inputElectives, inputSemester, dontWant)) 
 
 def multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant): 
+    schedule_dict = {}
     for sem in inputSemester:
         classes, quit = basicAlg(input, inputHours, inputElectives, sem, dontWant)
+        schedule_dict[sem] = classes
         for cspb in classes:
             input.append(cspb)
-        print(classes) 
         if quit >= 45:
-            return "That's the end!" 
+            schedule_dict["That's it!"] = "You've taken all the courses you need to graduate."
+            return schedule_dict 
+    return schedule_dict
+        
+print(multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)) 
+        
 
 #print(multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)) 
