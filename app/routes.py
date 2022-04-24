@@ -6,8 +6,8 @@ from flask_login import login_required
 from flask_login import logout_user
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ReviewForm
-from app.models import User, Review
+from app.forms import LoginForm, RegistrationForm, ReviewForm, PlanForm
+from app.models import User, Review, SemesterSchedule
 
 from basicGen import basicAlg
 from reviews import *
@@ -15,7 +15,6 @@ from app.forms import LoginForm
 from config import Config
 
 import json
-
 import datetime
 
 
@@ -34,27 +33,70 @@ def index():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html')
-'''
-@app.route('/test')
-def dropdown():
-    form = ReviewForm()
-    colors = ['Red', 'Blue', 'Black', 'Orange']
-    return render_template('test.html', colors=colors, form=form)
-'''
 
+'''
 @app.route('/about')
 def about():
     user = {'username': 'Ryan'}
     return render_template('about.html')
+'''
+
+'''
+@app.route('/plan', methods=['GET', 'POST'])
+@app.route('/plan')
+@login_required
+def plan():
+    # Default user id set to -1
+    user_id = -1
+
+    # Get the id of the current user that is logged in
+    if current_user.is_authenticated:
+        user = current_user.username
+        user_object = User.query.filter_by(username=user).first()
+        user_id = user_object.return_id()
+
+    form = PlanForm()
+    #user_plan = Review.query.all()
+    # plan_list = []
+    # for review in reviews_all: 
+        # reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp, review.user_id))
+    if form.validate_on_submit():
+        ts = datetime.datetime.utcnow()
+        # plan = SemesterSchedule(classname=form.classname.data, hoursperweek=form.hoursPerWeek.data, review=form.review.data, stars=form.stars.data, timestamp=ts, user_id=user_id)
+        # db.session.add(plan)
+        # db.session.commit()
+        # redirect after posting review
+        return redirect(url_for('plan'))
+    else:
+        # return render_template('plan.html', reviews=reviews_list, form=form)
+        return render_template('plan.html', form=form)
+'''
 
 @app.route('/plan', methods=['GET', 'POST'])
 @app.route('/plan')
 def plan():
+
+    # Default user id set to -1
+    user_id = -1
+    # form = PlanForm()
+    # Get the id of the current user that is logged in
+    if current_user.is_authenticated:
+        user = current_user.username
+        user_object = User.query.filter_by(username=user).first()
+        user_id = user_object.return_id()
+
     if request.method == 'POST':
         selected_list = request.form.getlist('mycheckbox')
         selected_class = [class_dict[x] for x in selected_list]
-        to_take = basicAlg(selected_class)
-        return render_template('plan.html', classes=to_take)
+        hours = int(request.form.getlist('hour_to_have')[0])
+        elective = request.form.getlist('mycheckbox_elect')
+        semester = int(request.form.getlist('mycheckbox_semester')[0])
+        dontwant = request.form.getlist('mycheckbox_not')
+        [class_to_take, tot_credit] = basicAlg(selected_class, hours, elective, semester, dontwant)
+        # print(tot_credit)
+        # '/user/<username>'
+        # return redirect(url_for('plan'))
+        return render_template('plan.html', classes=class_to_take, credit = tot_credit)
     else:
         classes = []
         return render_template('plan.html', classes=classes)

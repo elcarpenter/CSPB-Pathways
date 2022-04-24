@@ -1,29 +1,46 @@
 {% extends "base.html" %}
+
 {% block body %}
 
-        <h1>Hello, student!</h1>
-        <h3>Please enter information below to start setting up your plan</h3>
-        <form method="POST" action="/plan">
-        CSPB 1300 <input type="checkbox" value="1" name="mycheckbox">
-        CSPB 2824<input type="checkbox" value="2" name="mycheckbox">
-        CSPB 2270<input type="checkbox" value="3" name="mycheckbox">
-        CSPB 3104 <input type="checkbox" value="4" name="mycheckbox">
-        CSPB 2400<input type="checkbox" value="5" name="mycheckbox">
-        CSPB 3308<input type="checkbox" value="6" name="mycheckbox">
-        CSPB 3155 <input type="checkbox" value="7" name="mycheckbox">
-        CSPB 3702<input type="checkbox" value="8" name="mycheckbox">
-        CSPB 3022<input type="checkbox" value="9" name="mycheckbox">
-        CSPB 4122 <input type="checkbox" value="10" name="mycheckbox">
-        CSPB 4502<input type="checkbox" value="11" name="mycheckbox">
-        CSPB 2820<input type="checkbox" value="12" name="mycheckbox">
-        CSPB 3403<input type="checkbox" value="13" name="mycheckbox">
-        <input type="submit">
-
-        <br>
-        <h3>Classes to take</h3>
-        {% for class in classes %}
-            <li>{{class}}</li>
-        {% endfor %}
-        // clear option for info
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.classesTaken.label }} 
+            {{ form.classesTaken }}
+            {% for error in form.classesTaken.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.hoursPerWeek.label }}<br>
+            {{ form.hoursPerWeek(size=32) }}<br>
+            {% for error in form.hoursPerWeek.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.electives.label }} 
+            {{ form.electives }}
+            {% for error in form.electives.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.semester.label }} 
+            {{ form.semester }}
+            {% for error in form.semester.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>
+            {{ form.notTake.label }} 
+            {{ form.notTake }}
+            {% for error in form.notTake.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
 
 {% endblock %}
+

@@ -35,18 +35,90 @@ class ReviewForm(FlaskForm):
         'Class Number',
         [DataRequired()],
         choices=[
-            ('CSPB 1300', '1300'),
-            ('CSPB 2824', '2824'),
-            ('CSPB 2270', '2270'),
-            ('CSPB 3104', '3104'),
-            ('CSPB 2400', '2400'),
-            ('CSPB 3308', '3308'),
-            ('CSPB 3155', '3155'),
-            ('CSPB 3702', '3702')
+            ('CSPB 1300', 'CSPB 1300'),
+            ('CSPB 2824', 'CSPB 2824'),
+            ('CSPB 2270', 'CSPB 2270'),
+            ('CSPB 3104', 'CSPB 3104'),
+            ('CSPB 2400', 'CSPB 2400'),
+            ('CSPB 3308', 'CSPB 3308'),
+            ('CSPB 3155', 'CSPB 3155'),
+            ('CSPB 3702', 'CSPB 3702'),
+            ('CSPB 3022', "CSPB 3022"),
+            ('CSPB 4122', "CSPB 4122"),
+            ('CSPB 4502', "CSPB 4502"),
+            ('CSPB 2820', "CSPB 2820"),
+            ('CSPB 3403', "CSPB 3403")
         ]
     )
     review = TextAreaField('Please enter your review:', validators=[DataRequired()])
     hoursPerWeek = IntegerField('Hours per week', validators=[DataRequired(), NumberRange(min=0, message='Must enter a number greater than 0')])
     stars = SelectField(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+    submit = SubmitField('Send Review')
+
+
+class PlanForm(FlaskForm):
+    classesTaken = SelectField(
+        'Class Number',
+        [DataRequired()],
+        choices=[
+            ('CSPB 1300', 'CSPB 1300'),
+            ('CSPB 2824', 'CSPB 2824'),
+            ('CSPB 2270', 'CSPB 2270'),
+            ('CSPB 3104', 'CSPB 3104'),
+            ('CSPB 2400', 'CSPB 2400'),
+            ('CSPB 3308', 'CSPB 3308'),
+            ('CSPB 3155', 'CSPB 3155'),
+            ('CSPB 3702', 'CSPB 3702'),
+            ('CSPB 3022', "CSPB 3022"),
+            ('CSPB 4122', "CSPB 4122"),
+            ('CSPB 4502', "CSPB 4502"),
+            ('CSPB 2820', "CSPB 2820"),
+            ('CSPB 3403', "CSPB 3403")
+        ]
+    )
+    hoursPerWeek = IntegerField('Hours per week', validators=[DataRequired(), NumberRange(min=0, message='Must enter a number greater than 0')])
+    electives = SelectField(
+        'Class Number',
+        [DataRequired()],
+        choices=[
+            ('CSPB 3702', 'CSPB 3702'),
+            ('CSPB 3022', "CSPB 3022"),
+            ('CSPB 4122', "CSPB 4122"),
+            ('CSPB 4502', "CSPB 4502"),
+            ('CSPB 2820', "CSPB 2820"),
+            ('CSPB 3403', "CSPB 3403")            
+        ]
+    )
+    semester = SelectField(
+        'Semester',
+        [DataRequired()],
+        choices=[
+            ('Summer 2022', 'Summer 2022'),
+            ('Fall 2022', 'Fall 2022'),
+            ('Spring 2023', 'Spring 2023'),
+            ('Summer 2023', 'Summer 2023'),
+            ('Fall 2023', 'Fall 2023'),
+            ('Spring 2024', 'Spring 2024'),
+        ]
+    )
+    notTake = SelectField(
+        'Class Number',
+        [DataRequired()],
+        choices=[
+            ('CSPB 1300', 'CSPB 1300'),
+            ('CSPB 2824', 'CSPB 2824'),
+            ('CSPB 2270', 'CSPB 2270'),
+            ('CSPB 3104', 'CSPB 3104'),
+            ('CSPB 2400', 'CSPB 2400'),
+            ('CSPB 3308', 'CSPB 3308'),
+            ('CSPB 3155', 'CSPB 3155'),
+            ('CSPB 3702', 'CSPB 3702'),
+            ('CSPB 3022', "CSPB 3022"),
+            ('CSPB 4122', "CSPB 4122"),
+            ('CSPB 4502', "CSPB 4502"),
+            ('CSPB 2820', "CSPB 2820"),
+            ('CSPB 3403', "CSPB 3403")
+        ]
+    )
     submit = SubmitField('Send Review')
 
