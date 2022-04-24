@@ -1,46 +1,98 @@
 {% extends "base.html" %}
-
 {% block body %}
 
-    <form action="" method="post">
-        {{ form.hidden_tag() }}
-        <p>
-            {{ form.classesTaken.label }} 
-            {{ form.classesTaken }}
-            {% for error in form.classesTaken.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.hoursPerWeek.label }}<br>
-            {{ form.hoursPerWeek(size=32) }}<br>
-            {% for error in form.hoursPerWeek.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.electives.label }} 
-            {{ form.electives }}
-            {% for error in form.electives.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.semester.label }} 
-            {{ form.semester }}
-            {% for error in form.semester.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>
-            {{ form.notTake.label }} 
-            {{ form.notTake }}
-            {% for error in form.notTake.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </p>
-        <p>{{ form.submit() }}</p>
-    </form>
+        <h6>Classes already taken:</h6>
+        <form method="POST" action="/plan">
+        CSPB 1300 <input type="checkbox" value="1" name="mycheckbox">&nbsp;
+        CSPB 2824<input type="checkbox" value="2" name="mycheckbox">&nbsp;
+        CSPB 2270<input type="checkbox" value="3" name="mycheckbox">&nbsp;
+        CSPB 3104 <input type="checkbox" value="4" name="mycheckbox">&nbsp;
+        CSPB 2400<input type="checkbox" value="5" name="mycheckbox">
+        <br>
+        CSPB 3308<input type="checkbox" value="6" name="mycheckbox">&nbsp;
+        CSPB 3155 <input type="checkbox" value="7" name="mycheckbox">&nbsp;
+        CSPB 3702<input type="checkbox" value="8" name="mycheckbox">&nbsp;
+        CSPB 3022<input type="checkbox" value="9" name="mycheckbox">&nbsp;
+        CSPB 4122 <input type="checkbox" value="10" name="mycheckbox">
+        <br>
+        CSPB 4502<input type="checkbox" value="11" name="mycheckbox">&nbsp;
+        CSPB 2820<input type="checkbox" value="12" name="mycheckbox">&nbsp;
+        CSPB 3403<input type="checkbox" value="13" name="mycheckbox">&nbsp;
+        CSPB 3202 <input type="checkbox" value="14" name="mycheckbox">&nbsp;
+        CSPB 4622 <input type="checkbox" value="15" name="mycheckbox">
+        <br>
+        CSPB 3302<input type="checkbox" value="16" name="mycheckbox">&nbsp;
+        CSPB 3753<input type="checkbox" value="17" name="mycheckbox">&nbsp;
+        CSPB 3287<input type="checkbox" value="18" name="mycheckbox">&nbsp;
+        CSPB 3112 <input type="checkbox" value="19" name="mycheckbox">
+        <br>
+        <br>
+        <h6>How many hours do you want to spend per week?</h6>
+        <input type="number" id="hour_to" name="hour_to_have" min = 0 max = 100 maxlength="4" size="4" value="{{ request.form['hours'] }}">
+        <br>
+        <br>
+        <h6>Elective Classes want to take:</h6>
+        <form method="POST" action="/plan">
+        CSPB 3702<input type="checkbox" value="1" name="mycheckbox_elect">&nbsp;
+        CSPB 3022<input type="checkbox" value="2" name="mycheckbox_elect">&nbsp;
+        CSPB 4122<input type="checkbox" value="3" name="mycheckbox_elect">&nbsp;
+        CSPB 4502<input type="checkbox" value="4" name="mycheckbox_elect">
+        <br>
+        CSPB 2820<input type="checkbox" value="5" name="mycheckbox_elect">&nbsp;
+        CSPB 3403<input type="checkbox" value="6" name="mycheckbox_elect">&nbsp;
+        CSPB 3202<input type="checkbox" value="7" name="mycheckbox_elect">&nbsp;
+        CSPB 4622<input type="checkbox" value="8" name="mycheckbox_elect">
+        <br>
+        CSPB 3302<input type="checkbox" value="9" name="mycheckbox_elect">&nbsp;
+        CSPB 3753<input type="checkbox" value="10" name="mycheckbox_elect">&nbsp;
+        CSPB 3287<input type="checkbox" value="11" name="mycheckbox_elect">&nbsp;
+        CSPB 3112<input type="checkbox" value="12" name="mycheckbox_elect">
+        <br>
+        <br>
+        <h6>Select your semesters:</h6>
+        <form method="POST" action="/plan">
+        Summer2022<input type="checkbox" value="1" name="mycheckbox_semester">&nbsp;
+        Fall2022<input type="checkbox" value="2" name="mycheckbox_semester">&nbsp;
+        Spring2023 <input type="checkbox" value="3" name="mycheckbox_semester">&nbsp;
+        Summer2023<input type="checkbox" value="4" name="mycheckbox_semester">&nbsp;
+        Fall2023<input type="checkbox" value="5" name="mycheckbox_semester">&nbsp;
+        Spring2024<input type="checkbox" value="6" name="mycheckbox_semester">
+        <h6>Classes you don't want to take:</h6>
+        <form method="POST" action="/plan">
+        CSPB 1300 <input type="checkbox" value="1" name="mycheckbox_not">&nbsp;
+        CSPB 2824<input type="checkbox" value="2" name="mycheckbox_not">&nbsp;
+        CSPB 2270<input type="checkbox" value="3" name="mycheckbox_not">&nbsp;
+        CSPB 3104 <input type="checkbox" value="4" name="mycheckbox_not">&nbsp;
+        CSPB 2400<input type="checkbox" value="5" name="mycheckbox_not">
+        <br>
+        CSPB 3308<input type="checkbox" value="6" name="mycheckbox_not">&nbsp;
+        CSPB 3155 <input type="checkbox" value="7" name="mycheckbox_not">&nbsp;
+        CSPB 3702<input type="checkbox" value="8" name="mycheckbox_not">&nbsp;
+        CSPB 3022<input type="checkbox" value="9" name="mycheckbox_not">&nbsp;
+        CSPB 4122 <input type="checkbox" value="10" name="mycheckbox_not">
+        <br>
+        CSPB 4502<input type="checkbox" value="11" name="mycheckbox_not">&nbsp;
+        CSPB 2820<input type="checkbox" value="12" name="mycheckbox_not">&nbsp;
+        CSPB 3403<input type="checkbox" value="13" name="mycheckbox_not">&nbsp;
+        CSPB 3202 <input type="checkbox" value="14" name="mycheckbox_not">&nbsp;
+        CSPB 4622 <input type="checkbox" value="15" name="mycheckbox_not">
+        <br>
+        CSPB 3302<input type="checkbox" value="16" name="mycheckbox_not">&nbsp;
+        CSPB 3753<input type="checkbox" value="17" name="mycheckbox_not">&nbsp;
+        CSPB 3287<input type="checkbox" value="18" name="mycheckbox_not">&nbsp;
+        CSPB 3112 <input type="checkbox" value="19" name="mycheckbox_not">
+        <br>
+        <br>
+        <button type="submit" class="btn btn-primary">Submit</button>
+        <br>
+        <br>
+        <br>
+        <br>
+        <h4 style="font-size: 200%;">Classes to take</h4>
+        {% for class in classes %}
+            <li>{{"CSPB"}} {{class}}</li>
+        <h4 style="font-size: 200%;">Total credit</h4>
+            <li>{{credit}}</li>
+        {% endfor %}
 
 {% endblock %}
-

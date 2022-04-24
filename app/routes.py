@@ -11,12 +11,58 @@ from app.models import User, Review, SemesterSchedule
 
 from basicGen import basicAlg
 from reviews import *
+from cspbAlg import *
 from app.forms import LoginForm
 from config import Config
 
 import json
 import datetime
 
+class_dict = {
+    '1': 1300,
+    '2': 2824,
+    '3': 2270,
+    '4': 3104,
+    '5': 2400,
+    '6': 3308,
+    '7': 3155,
+    '8': 3702,
+    '9': 3022,
+    '10': 4122,
+    '11': 4502,
+    '12': 2820,
+    '13': 3403,
+    '14': 3202,
+    '15': 4622,
+    '16': 3302,
+    '17': 3753,
+    '18': 3287,
+    '19': 3112
+}
+
+class_select_dict = {
+    '1': 3702,
+    '2': 3022,
+    '3': 4122,
+    '4': 4502,
+    '5': 2820,
+    '6': 3403,
+    '7': 3202,
+    '8': 4622,
+    '9': 3302,
+    '10': 3753,
+    '11': 3287,
+    '12': 3112
+}
+
+semester_dict = {
+    '1': 0,
+    '2': 1,
+    '3': 2,
+    '4': 3,
+    '5': 4,
+    '6': 5
+}
 
 
 # @login_required
@@ -34,12 +80,11 @@ def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html')
 
-'''
 @app.route('/about')
 def about():
     user = {'username': 'Ryan'}
     return render_template('about.html')
-'''
+
 
 '''
 @app.route('/plan', methods=['GET', 'POST'])
@@ -90,13 +135,16 @@ def plan():
         selected_class = [class_dict[x] for x in selected_list]
         hours = int(request.form.getlist('hour_to_have')[0])
         elective = request.form.getlist('mycheckbox_elect')
-        semester = int(request.form.getlist('mycheckbox_semester')[0])
+        semester = request.form.getlist('mycheckbox_semester')
         dontwant = request.form.getlist('mycheckbox_not')
-        [class_to_take, tot_credit] = basicAlg(selected_class, hours, elective, semester, dontwant)
+        for i in range(0, len(semester)):
+            semester[i] = int(semester[i])
+        test_dict = multipleSemesters(selected_class, hours, elective, semester, dontwant)
+        return str(test_dict)
         # print(tot_credit)
         # '/user/<username>'
         # return redirect(url_for('plan'))
-        return render_template('plan.html', classes=class_to_take, credit = tot_credit)
+        return render_template('plan.html', classes=classes)
     else:
         classes = []
         return render_template('plan.html', classes=classes)
