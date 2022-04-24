@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block body %}
+
+    <form method="POST" action="/reviews">
+        CSPB 1300 <input type="checkbox" value="1300" name="mycheckbox">
+        CSPB 2824<input type="checkbox" value="2824" name="mycheckbox">
+        CSPB 2270<input type="checkbox" value="2270" name="mycheckbox">
+        CSPB 3104 <input type="checkbox" value="3104" name="mycheckbox">
+        CSPB 2400<input type="checkbox" value="2400" name="mycheckbox">
+        CSPB 3308<input type="checkbox" value="3308" name="mycheckbox">
+        CSPB 3155 <input type="checkbox" value="3155" name="mycheckbox">
+        CSPB 3702<input type="checkbox" value="3702" name="mycheckbox">
+        CSPB 3022<input type="checkbox" value="3022" name="mycheckbox">
+        CSPB 4122 <input type="checkbox" value="4122" name="mycheckbox">
+        CSPB 4502<input type="checkbox" value="4502" name="mycheckbox">
+        CSPB 2820<input type="checkbox" value="2820" name="mycheckbox">
+        CSPB 3403<input type="checkbox" value="3403" name="mycheckbox">
+    <input type="submit">
+
+
+    <br>
+    <h3>Reviews for the selected classes</h3>
+    {% for key, value in reviews.items() %}
+    <li>{{ key }} : {{ value }}
+    {% endfor %}
+
+{% endblock %}
