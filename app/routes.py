@@ -6,23 +6,57 @@ from flask_login import login_required
 from flask_login import logout_user
 from werkzeug.urls import url_parse
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, ReviewForm
-from app.models import User, Review
+from app.forms import LoginForm, RegistrationForm, ReviewForm, PlanForm
+from app.models import User, Review, SemesterSchedule
 
 from basicGen import basicAlg
 from reviews import *
+from cspbAlg import *
 from app.forms import LoginForm
 from config import Config
 
 import json
-
 import datetime
 
+class_dict = {
+    '1': 1300,
+    '2': 2824,
+    '3': 2270,
+    '4': 3104,
+    '5': 2400,
+    '6': 3308,
+    '7': 3155,
+    '8': 3702,
+    '9': 3022,
+    '10': 4122,
+    '11': 4502,
+    '12': 2820,
+    '13': 3403,
+    '14': 3202,
+    '15': 4622,
+    '16': 3302,
+    '17': 3753,
+    '18': 3287,
+    '19': 3112
+}
+
+class_select_dict = {
+    '1': 3702,
+    '2': 3022,
+    '3': 4122,
+    '4': 4502,
+    '5': 2820,
+    '6': 3403,
+    '7': 3202,
+    '8': 4622,
+    '9': 3302,
+    '10': 3753,
+    '11': 3287,
+    '12': 3112
+}
 
 
-# @login_required
-# @app.route decorators from Flask, the function becomes protected 
-# and will not allow access to users that are not authenticated
+# This is the index page
 @app.route('/', methods=["GET", "POST"])
 @app.route('/index', methods=["GET", "POST"])
 def index():
@@ -34,30 +68,77 @@ def index():
 def user(username):
     user = User.query.filter_by(username=username).first_or_404()
     return render_template('user.html')
-'''
-@app.route('/test')
-def dropdown():
-    form = ReviewForm()
-    colors = ['Red', 'Blue', 'Black', 'Orange']
-    return render_template('test.html', colors=colors, form=form)
-'''
 
+# This was removed but might be added later
 @app.route('/about')
 def about():
     user = {'username': 'Ryan'}
     return render_template('about.html')
 
+
+
 @app.route('/plan', methods=['GET', 'POST'])
 @app.route('/plan')
+@login_required
 def plan():
+
+    # Default user id set to -1
+    user_id = -1
+    # form = PlanForm()
+    # Get the id of the current user that is logged in
+    if current_user.is_authenticated:
+        user = current_user.username
+        user_object = User.query.filter_by(username=user).first()
+        user_id = user_object.return_id()
+
+    # if form.validate_on_submit():
     if request.method == 'POST':
         selected_list = request.form.getlist('mycheckbox')
         selected_class = [class_dict[x] for x in selected_list]
-        to_take = basicAlg(selected_class)
-        return render_template('plan.html', classes=to_take)
+        hours = int(request.form.getlist('hour_to_have')[0])
+        elective = request.form.getlist('mycheckbox_elect')
+        semester = request.form.getlist('mycheckbox_semester')
+        dontwant = request.form.getlist('mycheckbox_not')
+        # The two lists below need to be integers to work
+        for i in range(0, len(semester)):
+            semester[i] = int(semester[i])
+        for i in range(0, len(dontwant)):
+            dontwant[i] = int(dontwant[i])
+
+        # Testing the return values
+        # strr = "Selected classes:" + str(selected_class) + " " + "Hours:" + str(hours) + " " + "Electives:" + str(elective) + " " + "Semester:" + str(semester) + " " + "Don't want:" + str(dontwant)
+        classes = multipleSemesters(selected_class, hours, elective, semester, dontwant)
+        classes2 = dict()
+        nlist = []
+        for c in classes:
+            if c == 1: 
+                classes2["Summer 2022"] = classes[c]
+            elif c == 2:
+                classes2["Fall 2022"] = classes[c]
+            elif c == 3: 
+                classes2["Fall 2022"] = classes[c]
+            elif c == 4: 
+                classes2["Fall 2022"] = classes[c]
+            elif c == 5: 
+                classes2["Fall 2022"] = classes[c]
+            else: 
+                classes2["Spring 2024"] = classes[c]
+
+            # get the timestamp
+            ts = datetime.datetime.utcnow()
+
+            # for c in classes2:
+                # hours is hours per week
+                # user_id is the user's id
+                #plan = SemesterSchedule(classname=form.classname.data, hoursperweek=form.hoursPerWeek.data, review=form.review.data, stars=form.stars.data, timestamp=ts, user_id=user_id)
+                #db.session.add(plan)
+                #db.session.commit()
+                #redirect after posting review to user's page
+        return render_template('plan.html')
+        #redirect after posting review to user's page
+        # return redirect(url_for('plan'))
     else:
-        classes = []
-        return render_template('plan.html', classes=classes)
+        return render_template('plan.html')
 
 @app.route('/contact', methods=['GET', 'POST'])
 @app.route('/contact')
@@ -66,9 +147,10 @@ def contact():
     return render_template('contact.html', user=user)
 
 
+
+@app.route('/updates')
 # @app.route decorators from Flask, the function becomes protected 
 # and will not allow access to users that are not authenticated
-@app.route('/updates')
 @login_required
 def updates():
     user = {'username': 'Ryan'}

@@ -54,7 +54,7 @@ class SemesterSchedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     semester = db.Column(db.String(60), index=True, unique=True)
     classname = db.Column(db.String(60), index=True, unique=True)
-    hoursperweek= db.Column(db.String(140))
+    hoursperweek= db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
