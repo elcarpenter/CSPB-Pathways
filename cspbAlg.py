@@ -1,14 +1,6 @@
 
 # TO DO and QUESTIONS TO ANSWER 
-# How to make sure they take all of the required classes 
-# Find way to access different semesters 
-# Find best way to organize course list 
-    # How can we sort unwanted electives out/prioritize others 
-    # What priority do we give required courses? 
-# Create a two-semester schedule 
 # When electives we want to take are not being offered, do we delay graduation or take something else? 
-# How to take of pre-reqs for wanted electives 
-    # EX: If someone wants 4622, but doesn't list 2820, how do we make sure it gets taken? 
 
 
 def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
@@ -18,14 +10,6 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
     electives = [3022, 2820, 3403, 3202, 3287, 3753, 4622, 3302, 3702, 4122, 4502]
     everySem = [1300, 2824, 2270, 3104, 2400, 3308, 3155, 4122, 3702, 4502]
     possible = [] 
-
-    #by semester
-    summer2022 = [4122, 3702, 4502, 3287, 3202, 2820, 4622, 3022]
-    fall2022 = [4122, 3702, 4502, 3753, 3022, 3403, 4622, 3302]
-    spring2023 = [4122, 3702, 4502, 3287, 3202, 2820]
-    summer2023 = [4122, 3702, 4502, 3753, 3022, 3403, 4622, 3302] 
-    fall2023 = [4122, 3702, 4502, 3287, 3202, 2820] 
-    spring2024 = [4122, 3702, 4502, 3753, 3022, 3403]
 
     # [summer2022, fall2022, spring2023, summer2023, fall2023, spring2024] 
     # Nested arrays to get elective offering for each semester  
@@ -106,8 +90,14 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
     take = [] 
     hours = 0
 
+    if input == [] and inputHours >= 10:
+        take.append(1300) 
+        inputHours = inputHours - 10
+        hours = hours + 10
+        totalCredits = totalCredits + 4 
+
     for course in courses:
-        if course not in input:
+        if course not in input and course not in take:
             if course in reqCourses:
                 if preReqChecker(input, take, course):
                     possible.append(course) 
@@ -345,12 +335,40 @@ def preReqChecker(input, take, course):
 
 input = [] 
 inputHours = 25
-inputElectives = [] 
+inputElectives = [3753, 3403, 3702, 4122, 4502, 3022, 3302, 4622] 
 dontWant = []
 inputSemester = [0,1,2,3]
 
+def validDontWant(dontWant):
+    count = 0
+    for course in dontWant:
+        count = count + 3 
+        if course == 3403 or course == 3753:
+            count = count + 1
+    if count > 15:
+        return 0
+    else:
+        return 1
+
+def validInputElectives(inputElectives):
+    otherCount = 0
+    for course in inputElectives:
+        otherCount = otherCount + 3 
+        if course == 3403 or course == 3753:
+            otherCount = otherCount + 1
+    if otherCount > 21:
+        return 0
+    else:
+        return 1
+
 def multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant): 
     schedule_dict = {}
+    valid = validDontWant(dontWant)
+    if valid == 0:
+        return "You've selected too many electives you don't want to take. You can select up to 9 credits worth."
+    validElectives = validInputElectives(inputElectives)
+    if validElectives == 0:
+        return "You've selected too many electives you want to take. You can select up to 27 credits worth."
     for sem in inputSemester:
         classes, quit = basicAlg(input, inputHours, inputElectives, sem, dontWant)
         schedule_dict[sem] = classes
