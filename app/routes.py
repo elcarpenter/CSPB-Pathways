@@ -66,15 +66,30 @@ def index():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-    user = User.query.filter_by(username=username).first_or_404()
+    reviews_all = Review.query.all()
+    reviews_list = []
+    for review in reviews_all: 
+        reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp, review.user_id))
+    # return str(reviews_list)
+    if current_user.is_authenticated:
+        user = current_user.username
+        user_object = User.query.filter_by(username=user).first()
+        user_id = user_object.return_id()
+        # user_sched= SemesterSchedule.query.all()
+        user_sched = SemesterSchedule.query.filter_by(user_id=user_id).all()
+        # print(user_list)
+        user_list = []
+        for plan in user_sched: 
+            user_list.append((plan.semester, plan.classlist, plan.hoursperweek, plan.timestamp, plan.user_id))
+        return str(user_list)
     return render_template('user.html')
+
 
 # This was removed but might be added later
 @app.route('/about')
 def about():
     user = {'username': 'Ryan'}
     return render_template('about.html')
-
 
 
 @app.route('/plan', methods=['GET', 'POST'])
@@ -134,13 +149,15 @@ def plan():
                 # user_id is the user's id
                 # get the timestamp
                 ts = datetime.datetime.utcnow()
+                # Delete all of the old classes for this user
+                # SemesterSchedule.query.filter_by(user_id=user_id).delete()
                 plan = SemesterSchedule(semester=semester, classlist=classes_string, hoursperweek=hours, timestamp=ts, user_id=user_id)
                 db.session.add(plan)
                 db.session.commit()
         # return classes_string
-        return render_template('plan.html')
+        #return render_template('plan.html')
         #redirect after posting review to user's page
-        # return redirect(url_for('plan'))
+        return redirect(url_for('/user/<username>'))
     else:
         return render_template('plan.html')
 
@@ -151,7 +168,7 @@ def contact():
     return render_template('contact.html', user=user)
 
 
-
+# This was never implemented fully
 @app.route('/updates')
 # @app.route decorators from Flask, the function becomes protected 
 # and will not allow access to users that are not authenticated

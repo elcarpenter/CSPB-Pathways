@@ -57,7 +57,7 @@ class SemesterSchedule(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<SemesterSchedule{}>'.format(self.user_id)
+        return '<SemesterSchedule {} >'.format(self.user_id)
 
 @login.user_loader
 def load_user(id):
