@@ -206,6 +206,9 @@ def register():
     return render_template('register.html', form=form)
 
 @app.route('/reviews', methods=['GET', 'POST'])
+# @app.route decorators from Flask, the function becomes protected 
+# and will not allow access to users that are not authenticated
+@login_required
 def reviews():
     # Default user id set to -1
     user_id = -1
