@@ -358,7 +358,7 @@ def validInputElectives(inputElectives, input):
         if course == 3403 or course == 3753:
             otherCount = otherCount + 1
     for course in input:
-        if course in electives:
+        if course in electives and course not in inputElectives:
             otherCount = otherCount + 3
             if course == 3403 or course == 3753:
                 otherCount = otherCount + 1
