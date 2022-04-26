@@ -1,1 +1,12 @@
 {% extends "base.html" %}
+
+{% block body %}
+    <h3>Schedule</h3>
+    <div>
+    {% for dict_item in schedule %}
+    {% for key, value in dict_item.items() %}
+      <p>{{key}}: {{value}}</p>
+    {% endfor %}
+    {% endfor %}
+    </div>
+{% endblock %}
