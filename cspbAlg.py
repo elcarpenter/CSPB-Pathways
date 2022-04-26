@@ -333,11 +333,11 @@ def preReqChecker(input, take, course):
         #1300, 2824, 2270, 3104, 2400, 3308, 2820, 4502, 3302, 3702, 3022
         #3155, 3403
 
-input = [] 
+input = [1300, 2824, 2270, 3702, 3104, 2400, 3308]
 inputHours = 25
-inputElectives = [3753, 3403, 3702, 4122, 4502, 3022, 3302, 4622] 
-dontWant = []
-inputSemester = [0,1,2,3]
+inputElectives = [2820, 3022, 3403, 3302] 
+dontWant = [3753, 4122, 4622, 3202]
+inputSemester = [0, 1, 2]
 
 def validDontWant(dontWant):
     count = 0
@@ -350,12 +350,18 @@ def validDontWant(dontWant):
     else:
         return 1
 
-def validInputElectives(inputElectives):
+def validInputElectives(inputElectives, input):
     otherCount = 0
+    electives = [3022, 2820, 3403, 3202, 3287, 3753, 4622, 3302, 3702, 4122, 4502]
     for course in inputElectives:
         otherCount = otherCount + 3 
         if course == 3403 or course == 3753:
             otherCount = otherCount + 1
+    for course in input:
+        if course in electives and course not in inputElectives:
+            otherCount = otherCount + 3
+            if course == 3403 or course == 3753:
+                otherCount = otherCount + 1
     if otherCount > 21:
         return 0
     else:
@@ -366,7 +372,7 @@ def multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant
     valid = validDontWant(dontWant)
     if valid == 0:
         return "You've selected too many electives you don't want to take. You can select up to 9 credits worth."
-    validElectives = validInputElectives(inputElectives)
+    validElectives = validInputElectives(inputElectives, input)
     if validElectives == 0:
         return "You've selected too many electives you want to take. You can select up to 27 credits worth."
     for sem in inputSemester:
@@ -380,6 +386,3 @@ def multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant
     return schedule_dict
         
 print(multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)) 
-        
-
-#print(multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)) 
