@@ -222,8 +222,15 @@ def reviews():
     form = ReviewForm()
     reviews_all = Review.query.all()
     reviews_list = []
-    for review in reviews_all: 
-        reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp, review.user_id))
+    for review in reviews_all:
+        review = {
+            "Class": review.classname,
+            "Hours per week": review.hoursperweek,
+            "Review": review.review,
+            "Stars":review.stars
+           }
+        reviews_list.append(review)
+    # return str(reviews_list)
     if form.validate_on_submit():
         ts = datetime.datetime.utcnow()
         review = Review(classname=form.classname.data, hoursperweek=form.hoursPerWeek.data, review=form.review.data, stars=form.stars.data, timestamp=ts, user_id=user_id)

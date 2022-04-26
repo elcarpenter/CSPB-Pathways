@@ -36,9 +36,13 @@
     </form>
 
     <br>
-    <h3>Reviews for the selected classes</h3>
-    {% for key in reviews %}
-    <li>{{ key }}
+    <h3>Course reviews</h3>
+    <div>
+    {% for dict_item in reviews %}
+    {% for key, value in dict_item.items() %}
+      <p>{{key}}: {{value}}</p>
     {% endfor %}
+    {% endfor %}
+    </div>
 {% endblock %}
 
