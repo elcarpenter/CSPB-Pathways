@@ -66,23 +66,29 @@ def index():
 @app.route('/user/<username>')
 @login_required
 def user(username):
-    reviews_all = Review.query.all()
-    reviews_list = []
-    for review in reviews_all: 
-        reviews_list.append((review.classname, review.hoursperweek, review.review, review.stars, review.timestamp, review.user_id))
-    # return str(reviews_list)
+
+    # Default user id set to -1
+    user_id = -1
+
     if current_user.is_authenticated:
         user = current_user.username
         user_object = User.query.filter_by(username=user).first()
         user_id = user_object.return_id()
+        
         # user_sched= SemesterSchedule.query.all()
         user_sched = SemesterSchedule.query.filter_by(user_id=user_id).all()
-        # print(user_list)
-        user_list = []
+
+        sched_list = []
         for plan in user_sched: 
-            user_list.append((plan.semester, plan.classlist, plan.hoursperweek, plan.timestamp, plan.user_id))
-        return str(user_list)
-    return render_template('user.html')
+            review = {
+                "Semester": plan.semester,
+                "Classes": plan.classlist
+            }
+            sched_list.append(review)
+        # return str(sched_list)
+        # return str(reviews_list)
+        return render_template('user.html', schedule=sched_list)
+
 
 
 # This was removed but might be added later
@@ -157,7 +163,7 @@ def plan():
         # return classes_string
         #return render_template('plan.html')
         #redirect after posting review to user's page
-        return redirect(url_for('/user/<username>'))
+        return render_template('user.html')
     else:
         return render_template('plan.html')
 
