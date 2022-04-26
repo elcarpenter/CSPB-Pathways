@@ -109,31 +109,35 @@ def plan():
         # strr = "Selected classes:" + str(selected_class) + " " + "Hours:" + str(hours) + " " + "Electives:" + str(elective) + " " + "Semester:" + str(semester) + " " + "Don't want:" + str(dontwant)
         classes = multipleSemesters(selected_class, hours, elective, semester, dontwant)
         classes2 = dict()
-        nlist = []
         for c in classes:
             if c == 1: 
                 classes2["Summer 2022"] = classes[c]
             elif c == 2:
                 classes2["Fall 2022"] = classes[c]
             elif c == 3: 
-                classes2["Fall 2022"] = classes[c]
+                classes2["Spring 2023"] = classes[c]
             elif c == 4: 
-                classes2["Fall 2022"] = classes[c]
+                classes2["Summer 2023"] = classes[c]
             elif c == 5: 
-                classes2["Fall 2022"] = classes[c]
+                classes2["Fall 2023"] = classes[c]
             else: 
                 classes2["Spring 2024"] = classes[c]
 
-            # get the timestamp
-            ts = datetime.datetime.utcnow()
 
-            # for c in classes2:
+            for c in classes2:
+                semester= c
+                class_list = classes2[c]
+                classes_string = ""
+                for c in class_list:
+                    classes_string = str(c) + " " + classes_string
                 # hours is hours per week
                 # user_id is the user's id
-                #plan = SemesterSchedule(classname=form.classname.data, hoursperweek=form.hoursPerWeek.data, review=form.review.data, stars=form.stars.data, timestamp=ts, user_id=user_id)
-                #db.session.add(plan)
-                #db.session.commit()
-                #redirect after posting review to user's page
+                # get the timestamp
+                ts = datetime.datetime.utcnow()
+                plan = SemesterSchedule(semester=semester, classlist=classes_string, hoursperweek=hours, timestamp=ts, user_id=user_id)
+                db.session.add(plan)
+                db.session.commit()
+        # return classes_string
         return render_template('plan.html')
         #redirect after posting review to user's page
         # return redirect(url_for('plan'))

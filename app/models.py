@@ -5,9 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # Flask-Login keeps track of the logged in user by storing its unique identifier in Flask's user session
-# a storage space assigned to each user who connects to the application
-# Each time the logged-in user navigates to a new page, Flask-Login retrieves the ID of the user from the session, 
-# and then loads that user into memory.
+# When logged-in user navigates to a new page, Flask-Login retrieves the ID of the user from the session and then loads that user into memory.
 @login.user_loader
 def load_user(id):
     try:
@@ -52,14 +50,14 @@ class Review(db.Model):
 # Semester Schedule for the User
 class SemesterSchedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    semester = db.Column(db.String(60), index=True, unique=True)
-    classname = db.Column(db.String(60), index=True, unique=True)
+    semester = db.Column(db.String(60), index=True)
+    classlist = db.Column(db.String(60), index=True)
     hoursperweek= db.Column(db.Integer)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     def __repr__(self):
-        return '<SemesterSchedule{}>'.format(self.body)
+        return '<SemesterSchedule{}>'.format(self.user_id)
 
 @login.user_loader
 def load_user(id):
