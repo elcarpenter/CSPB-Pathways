@@ -126,8 +126,12 @@ def plan():
         for i in range(0, len(dontwant)):
             dontwant[i] = int(dontwant[i])
 
-        # Testing the return values
+        # Testing the return values from Emily's algorithm
         # strr = "Selected classes:" + str(selected_class) + " " + "Hours:" + str(hours) + " " + "Electives:" + str(elective) + " " + "Semester:" + str(semester) + " " + "Don't want:" + str(dontwant)
+        
+        # Delete all of the old classes for this user
+        SemesterSchedule.query.filter_by(user_id=user_id).delete()
+
         classes = multipleSemesters(selected_class, hours, elective, semester, dontwant)
         classes2 = dict()
         for c in classes:
@@ -145,25 +149,22 @@ def plan():
                 classes2["Spring 2024"] = classes[c]
 
 
-            for c in classes2:
-                semester= c
-                class_list = classes2[c]
-                classes_string = ""
-                for c in class_list:
-                    classes_string = str(c) + " " + classes_string
-                # hours is hours per week
-                # user_id is the user's id
-                # get the timestamp
-                ts = datetime.datetime.utcnow()
-                # Delete all of the old classes for this user
-                # SemesterSchedule.query.filter_by(user_id=user_id).delete()
-                plan = SemesterSchedule(semester=semester, classlist=classes_string, hoursperweek=hours, timestamp=ts, user_id=user_id)
-                db.session.add(plan)
-                db.session.commit()
-        # return classes_string
-        #return render_template('plan.html')
+        for c in classes2:
+            semester = c
+            class_list = classes2[c]
+
+            classes_string = ""
+            for c in class_list:
+                classes_string = str(c) + " " + classes_string
+            # hours is hours per week
+            # user_id is the user's id
+            # get the timestamp
+            ts = datetime.datetime.utcnow()
+            plan = SemesterSchedule(semester=semester, classlist=classes_string, hoursperweek=hours, timestamp=ts, user_id=user_id)
+            db.session.add(plan)
+            db.session.commit()
         #redirect after posting review to user's page
-        return render_template('user.html')
+        return redirect('/user/<username>')
     else:
         return render_template('plan.html')
 
