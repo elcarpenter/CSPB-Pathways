@@ -4,7 +4,7 @@ venv
 .DS_Store
 .db
 db
-
+app/app.db
 .env
 .flaskenv
 *.pyc
