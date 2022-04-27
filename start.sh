@@ -12,3 +12,8 @@ flask run
 # flask db init
 # flask db migrate
 # flask db upgrade
+
+# https://cspb-pathways.herokuapp.com/ | https://git.heroku.com/cspb-pathways.git
+# heroku addons:add heroku-postgresql:hobby-dev
+# Created postgresql-defined-50899 as DATABASE_URL
+# Use heroku addons:docs heroku-postgresql to view documentation
