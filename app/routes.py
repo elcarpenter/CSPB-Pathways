@@ -10,7 +10,7 @@ from app.forms import LoginForm, RegistrationForm, ReviewForm, PlanForm
 from app.models import User, Review, SemesterSchedule
 
 from basicGen import basicAlg
-from reviews import *
+# from reviews import *
 from cspbAlg import *
 from app.forms import LoginForm
 from config import Config
