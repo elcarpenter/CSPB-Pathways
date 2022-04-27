@@ -1,5 +1,5 @@
 
-# TO DO and QUESTIONS TO ANSWER 
+# QUESTIONS TO ANSWER 
 # When electives we want to take are not being offered, do we delay graduation or take something else? 
 
 
@@ -290,7 +290,7 @@ def basicAlg(input, inputHours, inputElectives, inputSemester, dontWant):
 
 
 def preReqChecker(input, take, course):
-    if course == 1300:
+    if course == 1300 and 1300 not in input and 1300 not in take:
         return True 
     elif course == 2824 or course == 3702 or course == 3022: 
         if 1300 in input or 1300 in take: 
@@ -330,14 +330,6 @@ def preReqChecker(input, take, course):
             return True 
     return False 
     
-        #1300, 2824, 2270, 3104, 2400, 3308, 2820, 4502, 3302, 3702, 3022
-        #3155, 3403
-
-input = [1300, 2824, 2270, 3702, 3104, 2400, 3308]
-inputHours = 25
-inputElectives = [2820, 3022, 3403, 3302] 
-dontWant = [3753, 4122, 4622, 3202]
-inputSemester = [0, 1, 2]
 
 def validDontWant(dontWant):
     count = 0
@@ -384,5 +376,3 @@ def multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant
             schedule_dict["That's it!"] = "You've taken all the courses you need to graduate."
             return schedule_dict 
     return schedule_dict
-        
-print(multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)) 
