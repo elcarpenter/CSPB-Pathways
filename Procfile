@@ -1,1 +1,1 @@
-web: flask db upgrade; gunicorn CPSB-Pathways:app
+web: flask db upgrade; gunicorn planner:app
