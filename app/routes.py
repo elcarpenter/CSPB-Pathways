@@ -78,6 +78,7 @@ def user(username):
         # user_sched= SemesterSchedule.query.all()
         user_sched = SemesterSchedule.query.filter_by(user_id=user_id).all()
 
+        # From Emily: ["That's it!"] = "You've taken all the courses you need to graduate."
         sched_list = []
         for plan in user_sched: 
             review = {
@@ -114,6 +115,7 @@ def plan():
 
     # if form.validate_on_submit():
     if request.method == 'POST':
+        # mycheckbox is Classes already taken
         selected_list = request.form.getlist('mycheckbox')
         selected_class = [class_dict[x] for x in selected_list]
         hours = int(request.form.getlist('hour_to_have')[0])
@@ -125,25 +127,27 @@ def plan():
             semester[i] = int(semester[i])
         for i in range(0, len(dontwant)):
             dontwant[i] = int(dontwant[i])
+        for i in range(0, len(elective)):
+            elective[i] = int(elective[i])
 
         # Testing the return values from Emily's algorithm
         # strr = "Selected classes:" + str(selected_class) + " " + "Hours:" + str(hours) + " " + "Electives:" + str(elective) + " " + "Semester:" + str(semester) + " " + "Don't want:" + str(dontwant)
-        
+        # return strr
         # Delete all of the old classes for this user
         SemesterSchedule.query.filter_by(user_id=user_id).delete()
 
         classes = multipleSemesters(selected_class, hours, elective, semester, dontwant)
         classes2 = dict()
         for c in classes:
-            if c == 1: 
+            if c == 0: 
                 classes2["Summer 2022"] = classes[c]
-            elif c == 2:
+            elif c == 1:
                 classes2["Fall 2022"] = classes[c]
-            elif c == 3: 
+            elif c == 2: 
                 classes2["Spring 2023"] = classes[c]
-            elif c == 4: 
+            elif c == 3: 
                 classes2["Summer 2023"] = classes[c]
-            elif c == 5: 
+            elif c == 4: 
                 classes2["Fall 2023"] = classes[c]
             else: 
                 classes2["Spring 2024"] = classes[c]
@@ -155,7 +159,14 @@ def plan():
 
             classes_string = ""
             for c in class_list:
+                # ["That's it!"] = "You've taken all the courses you need to graduate." == "You've taken all the courses you need to graduate."):
+                classes_string = "You've taken all the courses you need to graduate."
+                # Yes I know break is bad programming practice; will update later
+                break
+            else:
                 classes_string = str(c) + " " + classes_string
+            print(classes_string)
+            # if its "you graduated do something different
             # hours is hours per week
             # user_id is the user's id
             # get the timestamp

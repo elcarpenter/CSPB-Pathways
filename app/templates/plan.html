@@ -26,63 +26,52 @@
         CSPB 3302<input type="checkbox" value="16" name="mycheckbox">&nbsp;
         CSPB 3753<input type="checkbox" value="17" name="mycheckbox">&nbsp;
         CSPB 3287<input type="checkbox" value="18" name="mycheckbox">&nbsp;
-        CSPB 3112 <input type="checkbox" value="19" name="mycheckbox">
         <br>
         <br>
-        <h6>How many hours do you want to spend per week?</h6>
+        <h6>How many hours do you want to spend per week? (courses commitments range between 5 and 20 hours per week)</h6>
         <input type="number" id="hour_to" name="hour_to_have" min = 0 max = 100 maxlength="4" size="4" value="{{ request.form['hours'] }}">
         <br>
         <br>
-        <h6>Elective Classes want to take:</h6>
+        <h6>Elective Classes want to take (up to 21 credits):</h6>
         <form method="POST" action="/plan">
-        CSPB 3702<input type="checkbox" value="1" name="mycheckbox_elect">&nbsp;
-        CSPB 3022<input type="checkbox" value="2" name="mycheckbox_elect">&nbsp;
-        CSPB 4122<input type="checkbox" value="3" name="mycheckbox_elect">&nbsp;
-        CSPB 4502<input type="checkbox" value="4" name="mycheckbox_elect">
+        CSPB 3702<input type="checkbox" value="3702" name="mycheckbox_elect">&nbsp;
+        CSPB 3022<input type="checkbox" value="3022" name="mycheckbox_elect">&nbsp;
+        CSPB 4122<input type="checkbox" value="4122" name="mycheckbox_elect">&nbsp;
+        CSPB 4502<input type="checkbox" value="4502" name="mycheckbox_elect">
         <br>
-        CSPB 2820<input type="checkbox" value="5" name="mycheckbox_elect">&nbsp;
-        CSPB 3403<input type="checkbox" value="6" name="mycheckbox_elect">&nbsp;
-        CSPB 3202<input type="checkbox" value="7" name="mycheckbox_elect">&nbsp;
-        CSPB 4622<input type="checkbox" value="8" name="mycheckbox_elect">
+        CSPB 2820<input type="checkbox" value="2820" name="mycheckbox_elect">&nbsp;
+        CSPB 3403<input type="checkbox" value="3403" name="mycheckbox_elect">&nbsp;
+        CSPB 3202<input type="checkbox" value="3202" name="mycheckbox_elect">&nbsp;
+        CSPB 4622<input type="checkbox" value="4622" name="mycheckbox_elect">
         <br>
-        CSPB 3302<input type="checkbox" value="9" name="mycheckbox_elect">&nbsp;
-        CSPB 3753<input type="checkbox" value="10" name="mycheckbox_elect">&nbsp;
-        CSPB 3287<input type="checkbox" value="11" name="mycheckbox_elect">&nbsp;
-        CSPB 3112<input type="checkbox" value="12" name="mycheckbox_elect">
+        CSPB 3302<input type="checkbox" value="3302" name="mycheckbox_elect">&nbsp;
+        CSPB 3753<input type="checkbox" value="3753" name="mycheckbox_elect">&nbsp;
+        CSPB 3287<input type="checkbox" value="3287" name="mycheckbox_elect">&nbsp;
         <br>
         <br>
         <h6>Select your semesters:</h6>
         <form method="POST" action="/plan">
-        Summer2022<input type="checkbox" value="1" name="mycheckbox_semester">&nbsp;
-        Fall2022<input type="checkbox" value="2" name="mycheckbox_semester">&nbsp;
-        Spring2023 <input type="checkbox" value="3" name="mycheckbox_semester">&nbsp;
-        Summer2023<input type="checkbox" value="4" name="mycheckbox_semester">&nbsp;
-        Fall2023<input type="checkbox" value="5" name="mycheckbox_semester">&nbsp;
-        Spring2024<input type="checkbox" value="6" name="mycheckbox_semester">
-        <h6>Classes you don't want to take:</h6>
+        Summer2022<input type="checkbox" value="0" name="mycheckbox_semester">&nbsp;
+        Fall2022<input type="checkbox" value="1" name="mycheckbox_semester">&nbsp;
+        Spring2023 <input type="checkbox" value="2" name="mycheckbox_semester">&nbsp;
+        Summer2023<input type="checkbox" value="3" name="mycheckbox_semester">&nbsp;
+        Fall2023<input type="checkbox" value="4" name="mycheckbox_semester">&nbsp;
+        Spring2024<input type="checkbox" value="5" name="mycheckbox_semester">
+        <h6>Classes you don't want to take (up to 15 credits.):</h6>
         <form method="POST" action="/plan">
-        CSPB 1300 <input type="checkbox" value="1" name="mycheckbox_not">&nbsp;
-        CSPB 2824<input type="checkbox" value="2" name="mycheckbox_not">&nbsp;
-        CSPB 2270<input type="checkbox" value="3" name="mycheckbox_not">&nbsp;
-        CSPB 3104 <input type="checkbox" value="4" name="mycheckbox_not">&nbsp;
-        CSPB 2400<input type="checkbox" value="5" name="mycheckbox_not">
+        CSPB 3702<input type="checkbox" value="3702" name="mycheckbox_not">&nbsp;
+        CSPB 3022<input type="checkbox" value="3022" name="mycheckbox_not">&nbsp;
+        CSPB 4122 <input type="checkbox" value="4122" name="mycheckbox_not">
         <br>
-        CSPB 3308<input type="checkbox" value="6" name="mycheckbox_not">&nbsp;
-        CSPB 3155 <input type="checkbox" value="7" name="mycheckbox_not">&nbsp;
-        CSPB 3702<input type="checkbox" value="8" name="mycheckbox_not">&nbsp;
-        CSPB 3022<input type="checkbox" value="9" name="mycheckbox_not">&nbsp;
-        CSPB 4122 <input type="checkbox" value="10" name="mycheckbox_not">
+        CSPB 4502<input type="checkbox" value="4502" name="mycheckbox_not">&nbsp;
+        CSPB 2820<input type="checkbox" value="2820" name="mycheckbox_not">&nbsp;
+        CSPB 3403<input type="checkbox" value="3403" name="mycheckbox_not">&nbsp;
+        CSPB 3202 <input type="checkbox" value="3202" name="mycheckbox_not">&nbsp;
+        CSPB 4622 <input type="checkbox" value="4622" name="mycheckbox_not">
         <br>
-        CSPB 4502<input type="checkbox" value="11" name="mycheckbox_not">&nbsp;
-        CSPB 2820<input type="checkbox" value="12" name="mycheckbox_not">&nbsp;
-        CSPB 3403<input type="checkbox" value="13" name="mycheckbox_not">&nbsp;
-        CSPB 3202 <input type="checkbox" value="14" name="mycheckbox_not">&nbsp;
-        CSPB 4622 <input type="checkbox" value="15" name="mycheckbox_not">
-        <br>
-        CSPB 3302<input type="checkbox" value="16" name="mycheckbox_not">&nbsp;
-        CSPB 3753<input type="checkbox" value="17" name="mycheckbox_not">&nbsp;
-        CSPB 3287<input type="checkbox" value="18" name="mycheckbox_not">&nbsp;
-        CSPB 3112 <input type="checkbox" value="19" name="mycheckbox_not">
+        CSPB 3302<input type="checkbox" value="3302" name="mycheckbox_not">&nbsp;
+        CSPB 3753<input type="checkbox" value="3753" name="mycheckbox_not">&nbsp;
+        CSPB 3287<input type="checkbox" value="3287" name="mycheckbox_not">&nbsp;
         <br>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>

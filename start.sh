@@ -17,3 +17,4 @@ flask run
 # heroku addons:add heroku-postgresql:hobby-dev
 # Created postgresql-defined-50899 as DATABASE_URL
 # Use heroku addons:docs heroku-postgresql to view documentation
+# tutorial for heroku: https://medium.com/@gitaumoses4/deploying-a-flask-application-on-heroku-e509e5c76524
