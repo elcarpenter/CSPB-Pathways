@@ -160,12 +160,14 @@ def plan():
             classes_string = ""
             for c in class_list:
                 # ["That's it!"] = "You've taken all the courses you need to graduate." == "You've taken all the courses you need to graduate."):
-                classes_string = "You've taken all the courses you need to graduate."
-                # Yes I know break is bad programming practice; will update later
-                break
-            else:
-                classes_string = str(c) + " " + classes_string
-            print(classes_string)
+                print(c)
+                if (str(c)[0] == "Y"):
+                    classes_string = "You've taken all the courses you need to graduate."
+                    # Yes I know break is bad programming practice; will update later
+                    break
+                else:
+                    classes_string = str(c) + " " + classes_string
+            # print(classes_string)
             # if its "you graduated do something different
             # hours is hours per week
             # user_id is the user's id
@@ -174,6 +176,7 @@ def plan():
             plan = SemesterSchedule(semester=semester, classlist=classes_string, hoursperweek=hours, timestamp=ts, user_id=user_id)
             db.session.add(plan)
             db.session.commit()
+        # return classes_string
         #redirect after posting review to user's page
         return redirect('/user/<username>')
     else:
