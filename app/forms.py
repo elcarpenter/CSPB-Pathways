@@ -47,8 +47,12 @@ class ReviewForm(FlaskForm):
             ('CSPB 4122', "CSPB 4122"),
             ('CSPB 4502', "CSPB 4502"),
             ('CSPB 2820', "CSPB 2820"),
-            ('CSPB 3403', "CSPB 3403")
-            # add CSPB 3753, CSPB 3287, CSPB 4622, CSPB 3302, CSPB 3202
+            ('CSPB 3403', "CSPB 3403"),
+            ('CSPB 3753', 'CSPB 3753'),
+            ('CSPB 3287', "CSPB 3287"),
+            ('CSPB 4622', "CSPB 4622"),
+            ('CSPB 3302', "CSPB 3302"),
+            ('CSPB 3203', "CSPB 3202")
         ]
     )
     review = TextAreaField('Please enter your review:', validators=[DataRequired()])
