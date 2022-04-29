@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block body %}
 
-        <h6 style="color: red">WARNING: If you already have a schedule created, submitting another will remove your old schedule</h6>
+        <h6 style="color: red">WARNING: submitting a new planner will overwrite your old one</h6>
         <p>Click <a href="{{ url_for('user', username=current_user.username) }}">here</a> to see your current schedule</p>
         <h5>Classes already taken:</h5>
         <form method="POST" action="/plan">
@@ -48,27 +48,27 @@
         <br>
         <h5>Elective Classes want to take (up to 21 credits):</h5>
         <form method="POST" action="/plan">
-        CSPB 3702 Cognitive Science<input type="checkbox" value="3702" name="mycheckbox_elect">&nbsp;
+        CSPB 3702 Cognitive Science (3 credit)<input type="checkbox" value="3702" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 3022 Intro to Data Science<input type="checkbox" value="3022" name="mycheckbox_elect">&nbsp;
+        CSPB 3022 Intro to Data Science (3 credit)<input type="checkbox" value="3022" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 4122 Information Visualization<input type="checkbox" value="4122" name="mycheckbox_elect">&nbsp;
+        CSPB 4122 Information Visualization (3 credit)<input type="checkbox" value="4122" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 4502 Data Mining<input type="checkbox" value="4502" name="mycheckbox_elect">
+        CSPB 4502 Data Mining (3 credit)<input type="checkbox" value="4502" name="mycheckbox_elect">
         <br>
-        CSPB 2820 Linear Algebra<input type="checkbox" value="2820" name="mycheckbox_elect">&nbsp;
+        CSPB 2820 Linear Algebra (3 credit)<input type="checkbox" value="2820" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 3403 CyberSecurity<input type="checkbox" value="3403" name="mycheckbox_elect">&nbsp;
+        CSPB 3403 CyberSecurity (4 credit)<input type="checkbox" value="3403" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 3202 Intro to Artificial Intelligence<input type="checkbox" value="3202" name="mycheckbox_elect">&nbsp;
+        CSPB 3202 Intro to Artificial Intelligence (3 credit)<input type="checkbox" value="3202" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 4622 Machine Learning<input type="checkbox" value="4622" name="mycheckbox_elect">
+        CSPB 4622 Machine Learning (3 credit)<input type="checkbox" value="4622" name="mycheckbox_elect">
         <br>
-        CSPB 3302 Introduction to Robotics<input type="checkbox" value="3302" name="mycheckbox_elect">&nbsp;
+        CSPB 3302 Introduction to Robotics (3 credit)<input type="checkbox" value="3302" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 3753 Operating Systems<input type="checkbox" value="3753" name="mycheckbox_elect">&nbsp;
+        CSPB 3753 Operating Systems (4 credit)<input type="checkbox" value="3753" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 3287 Database Systems<input type="checkbox" value="3287" name="mycheckbox_elect">&nbsp;
+        CSPB 3287 Database Systems (3 credit)<input type="checkbox" value="3287" name="mycheckbox_elect">&nbsp;
         <br>
         <br>
         <h5>Classes you want to avoid (up to 15 credits.):</h5>
