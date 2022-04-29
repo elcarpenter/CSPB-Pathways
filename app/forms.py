@@ -57,8 +57,9 @@ class ReviewForm(FlaskForm):
     )
     review = TextAreaField('Please enter your review:', validators=[DataRequired()])
     hoursPerWeek = IntegerField('Hours per week', validators=[DataRequired(), NumberRange(min=0, message='Must enter a number greater than 0')])
-    stars = SelectField(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4')])
+    stars = SelectField(choices=[('1', '1'), ('2', '2'), ('3', '3'), ('4', '4'),('5', '5')])
     submit = SubmitField('Send Review')
+    
 
 
 class PlanForm(FlaskForm):
