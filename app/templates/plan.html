@@ -1,55 +1,102 @@
 {% extends "base.html" %}
 {% block body %}
 
-        <h3>WARNING: If you already have a schedule created, submitting another will remove your old schedule</h3>
+        <h6 style="color: red">WARNING: If you already have a schedule created, submitting another will remove your old schedule</h6>
         <p>Click <a href="{{ url_for('user', username=current_user.username) }}">here</a> to see your current schedule</p>
-        <h6>Classes already taken:</h6>
+        <h5>Classes already taken:</h5>
         <form method="POST" action="/plan">
-        CSPB 1300 <input type="checkbox" value="1" name="mycheckbox">&nbsp;
-        CSPB 2824<input type="checkbox" value="2" name="mycheckbox">&nbsp;
-        CSPB 2270<input type="checkbox" value="3" name="mycheckbox">&nbsp;
-        CSPB 3104 <input type="checkbox" value="4" name="mycheckbox">&nbsp;
-        CSPB 2400<input type="checkbox" value="5" name="mycheckbox">
+        CSPB 1300 Computer Science 1<input type="checkbox" value="1" name="mycheckbox">&nbsp;
         <br>
-        CSPB 3308<input type="checkbox" value="6" name="mycheckbox">&nbsp;
-        CSPB 3155 <input type="checkbox" value="7" name="mycheckbox">&nbsp;
-        CSPB 3702<input type="checkbox" value="8" name="mycheckbox">&nbsp;
-        CSPB 3022<input type="checkbox" value="9" name="mycheckbox">&nbsp;
-        CSPB 4122 <input type="checkbox" value="10" name="mycheckbox">
+        CSPB 2824 Discrete Structures<input type="checkbox" value="2" name="mycheckbox">&nbsp;
         <br>
-        CSPB 4502<input type="checkbox" value="11" name="mycheckbox">&nbsp;
-        CSPB 2820<input type="checkbox" value="12" name="mycheckbox">&nbsp;
-        CSPB 3403<input type="checkbox" value="13" name="mycheckbox">&nbsp;
-        CSPB 3202 <input type="checkbox" value="14" name="mycheckbox">&nbsp;
-        CSPB 4622 <input type="checkbox" value="15" name="mycheckbox">
+        CSPB 2270 Data Structures<input type="checkbox" value="3" name="mycheckbox">&nbsp;
         <br>
-        CSPB 3302<input type="checkbox" value="16" name="mycheckbox">&nbsp;
-        CSPB 3753<input type="checkbox" value="17" name="mycheckbox">&nbsp;
-        CSPB 3287<input type="checkbox" value="18" name="mycheckbox">&nbsp;
+        CSPB 3104 Algorithms<input type="checkbox" value="4" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 2400 Computer Systems<input type="checkbox" value="5" name="mycheckbox">
+        <br>
+        CSPB 3308 Software Development Methods and Tools<input type="checkbox" value="6" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3155 Principles of Programming Languages<input type="checkbox" value="7" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3702 Cognitive Science<input type="checkbox" value="8" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3022 Intro to Data Science<input type="checkbox" value="9" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 4122 Information Visualization<input type="checkbox" value="10" name="mycheckbox">
+        <br>
+        CSPB 4502 Data Mining<input type="checkbox" value="11" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 2820 Linear Algebra<input type="checkbox" value="12" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3403 CyberSecurity<input type="checkbox" value="13" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3202 Intro to Artificial Intelligence<input type="checkbox" value="14" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 4622 Machine Learning<input type="checkbox" value="15" name="mycheckbox">
+        <br>
+        CSPB 3302 Introduction to Robotics<input type="checkbox" value="16" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3753 Operating Systems<input type="checkbox" value="17" name="mycheckbox">&nbsp;
+        <br>
+        CSPB 3287 Database Systems<input type="checkbox" value="18" name="mycheckbox">&nbsp;
         <br>
         <br>
-        <h6>How many hours do you want to spend per week? (courses commitments range between 5 and 20 hours per week)</h6>
+        <h5>How many hours do you want to spend per week? (between 5 and 20 hours per week)</h5>
         <input type="number" id="hour_to" name="hour_to_have" min = 0 max = 100 maxlength="4" size="4" value="{{ request.form['hours'] }}">
         <br>
         <br>
-        <h6>Elective Classes want to take (up to 21 credits):</h6>
+        <h5>Elective Classes want to take (up to 21 credits):</h5>
         <form method="POST" action="/plan">
-        CSPB 3702<input type="checkbox" value="3702" name="mycheckbox_elect">&nbsp;
-        CSPB 3022<input type="checkbox" value="3022" name="mycheckbox_elect">&nbsp;
-        CSPB 4122<input type="checkbox" value="4122" name="mycheckbox_elect">&nbsp;
-        CSPB 4502<input type="checkbox" value="4502" name="mycheckbox_elect">
+        CSPB 3702 Cognitive Science<input type="checkbox" value="3702" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 2820<input type="checkbox" value="2820" name="mycheckbox_elect">&nbsp;
-        CSPB 3403<input type="checkbox" value="3403" name="mycheckbox_elect">&nbsp;
-        CSPB 3202<input type="checkbox" value="3202" name="mycheckbox_elect">&nbsp;
-        CSPB 4622<input type="checkbox" value="4622" name="mycheckbox_elect">
+        CSPB 3022 Intro to Data Science<input type="checkbox" value="3022" name="mycheckbox_elect">&nbsp;
         <br>
-        CSPB 3302<input type="checkbox" value="3302" name="mycheckbox_elect">&nbsp;
-        CSPB 3753<input type="checkbox" value="3753" name="mycheckbox_elect">&nbsp;
-        CSPB 3287<input type="checkbox" value="3287" name="mycheckbox_elect">&nbsp;
+        CSPB 4122 Information Visualization<input type="checkbox" value="4122" name="mycheckbox_elect">&nbsp;
+        <br>
+        CSPB 4502 Data Mining<input type="checkbox" value="4502" name="mycheckbox_elect">
+        <br>
+        CSPB 2820 Linear Algebra<input type="checkbox" value="2820" name="mycheckbox_elect">&nbsp;
+        <br>
+        CSPB 3403 CyberSecurity<input type="checkbox" value="3403" name="mycheckbox_elect">&nbsp;
+        <br>
+        CSPB 3202 Intro to Artificial Intelligence<input type="checkbox" value="3202" name="mycheckbox_elect">&nbsp;
+        <br>
+        CSPB 4622 Machine Learning<input type="checkbox" value="4622" name="mycheckbox_elect">
+        <br>
+        CSPB 3302 Introduction to Robotics<input type="checkbox" value="3302" name="mycheckbox_elect">&nbsp;
+        <br>
+        CSPB 3753 Operating Systems<input type="checkbox" value="3753" name="mycheckbox_elect">&nbsp;
+        <br>
+        CSPB 3287 Database Systems<input type="checkbox" value="3287" name="mycheckbox_elect">&nbsp;
         <br>
         <br>
-        <h6>Select your semesters:</h6>
+        <h5>Classes you want to avoid (up to 15 credits.):</h5>
+        <form method="POST" action="/plan">
+        CSPB 3702 Cognitive Science<input type="checkbox" value="3702" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 3022 Intro to Data Science<input type="checkbox" value="3022" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 4122 Information Visualization<input type="checkbox" value="4122" name="mycheckbox_not">
+        <br>
+        CSPB 4502 Data Mining<input type="checkbox" value="4502" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 2820 Linear Algebra<input type="checkbox" value="2820" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 3403 CyberSecurity<input type="checkbox" value="3403" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 3202 Intro to Artificial Intelligence<input type="checkbox" value="3202" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 4622 Machine Learning<input type="checkbox" value="4622" name="mycheckbox_not">
+        <br>
+        CSPB 3302 Introduction to Robotics<input type="checkbox" value="3302" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 3753 Operating Systems<input type="checkbox" value="3753" name="mycheckbox_not">&nbsp;
+        <br>
+        CSPB 3287 Database Systems<input type="checkbox" value="3287" name="mycheckbox_not">&nbsp;
+        <br>
+        <br>
+        <h5>Select your semesters:</h5>
         <form method="POST" action="/plan">
         Summer2022<input type="checkbox" value="0" name="mycheckbox_semester">&nbsp;
         Fall2022<input type="checkbox" value="1" name="mycheckbox_semester">&nbsp;
@@ -57,21 +104,6 @@
         Summer2023<input type="checkbox" value="3" name="mycheckbox_semester">&nbsp;
         Fall2023<input type="checkbox" value="4" name="mycheckbox_semester">&nbsp;
         Spring2024<input type="checkbox" value="5" name="mycheckbox_semester">
-        <h6>Classes you don't want to take (up to 15 credits.):</h6>
-        <form method="POST" action="/plan">
-        CSPB 3702<input type="checkbox" value="3702" name="mycheckbox_not">&nbsp;
-        CSPB 3022<input type="checkbox" value="3022" name="mycheckbox_not">&nbsp;
-        CSPB 4122 <input type="checkbox" value="4122" name="mycheckbox_not">
-        <br>
-        CSPB 4502<input type="checkbox" value="4502" name="mycheckbox_not">&nbsp;
-        CSPB 2820<input type="checkbox" value="2820" name="mycheckbox_not">&nbsp;
-        CSPB 3403<input type="checkbox" value="3403" name="mycheckbox_not">&nbsp;
-        CSPB 3202 <input type="checkbox" value="3202" name="mycheckbox_not">&nbsp;
-        CSPB 4622 <input type="checkbox" value="4622" name="mycheckbox_not">
-        <br>
-        CSPB 3302<input type="checkbox" value="3302" name="mycheckbox_not">&nbsp;
-        CSPB 3753<input type="checkbox" value="3753" name="mycheckbox_not">&nbsp;
-        CSPB 3287<input type="checkbox" value="3287" name="mycheckbox_not">&nbsp;
         <br>
         <br>
         <button type="submit" class="btn btn-primary">Submit</button>
