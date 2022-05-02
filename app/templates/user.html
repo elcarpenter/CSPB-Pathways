@@ -9,7 +9,11 @@
       {% if loop.first %}
         {{elem}}
       {% else %}
-        <li>CSPB {{elem}}</li>
+        {% if "That's" in elem %}
+          <li>{{elem}}</li>
+        {% else %}
+          <li>CSPB {{elem}}</li>
+        {% endif %}
       {% endif %}
     {% endfor %}
     </ul>
