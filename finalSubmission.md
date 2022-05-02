@@ -6,6 +6,6 @@ Team BIT: Emily Carpenter, Ryan Young, and Guanbo Bian
 
 [GitHub Repository](https://github.com/elcarpenter/CSPB-Pathways)
 
-[Demonstration](link.com)
+[Demonstration](https://github.com/elcarpenter/CSPB-Pathways/blob/622f90fc79f548b4a72fdfc7e52f1e7b4c2e4350/PathwayDemonstration.mp4)
 
 [Deployed Project](https://cspb-pathways.herokuapp.com/index)
