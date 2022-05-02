@@ -62,7 +62,7 @@ class_select_dict = {
 def index():
     return render_template('index.html')
 
-# User page that will select 
+# User page that will display the user's course schedule
 @app.route('/user/<username>')
 @login_required
 def user(username):
@@ -80,14 +80,26 @@ def user(username):
 
         # From Emily: ["That's it!"] = "You've taken all the courses you need to graduate."
         sched_list = []
-        for plan in user_sched: 
+        for plan in user_sched:
+            # split courses into a list of 1 each
+            class_list = plan.classlist.split()
+            if class_list[0] == "You've":
+                # deleting list using clear()
+                class_list.clear()
+                class_list.append("That's it! You've taken all the courses you need to graduate.")
+            else:
+                for c in class_list:
+                    c = "CSPB" + " " + str(c)
+            class_list.insert(0, plan.semester)
+            sched_list.append(class_list)
+        '''
             review = {
                 "Semester": plan.semester,
-                "Classes": plan.classlist
+                "Classes": class_list
             }
             sched_list.append(review)
+        '''
         # return str(sched_list)
-        # return str(reviews_list)
         return render_template('user.html', schedule=sched_list)
 
 
