@@ -249,7 +249,7 @@ class CSPBTest(unittest.TestCase):
         dontWant = [3753, 4122, 4622, 3202]
         inputSemester = [1, 2, 3, 4, 5]
         p = cspbAlg.multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)
-        self.assertEqual(p, ({1: [3022, 2824, 3702], 2: [2820, 2270, 3308], 3: [3302, 3104, 4502], 4: [2400, 3155], 5: [3403], "That's it!": "You've taken all the courses you need to graduate."}), "test_case_24 error")
+        self.assertEqual(p, ({1: [3022, 2824, 3702], 2: [2820, 2270, 3308], 3: [3302, 3104, 4502], 4: [2400, 3155], 5: [3403]}), "test_case_24 error")
     
     def test_case_25(self): 
         # Version two, cases 20-23 
@@ -259,7 +259,7 @@ class CSPBTest(unittest.TestCase):
         dontWant = [3753, 4122, 4622, 3202]
         inputSemester = [0, 1, 2, 3, 4, 5]
         p = cspbAlg.multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)
-        self.assertEqual(p, ({0: [3022, 2824, 3702], 1: [2270, 2400], 2: [2820, 3104, 3308], 3: [3403, 3302, 3155, 4502], "That's it!": "You've taken all the courses you need to graduate."}), "test_case_25 error")
+        self.assertEqual(p, ({0: [3022, 2824, 3702], 1: [2270, 2400], 2: [2820, 3104, 3308], 3: [3403, 3302, 3155, 4502]}), "test_case_25 error")
   
     def test_case_26(self): 
         # personal version for multiple - 30h
@@ -269,7 +269,7 @@ class CSPBTest(unittest.TestCase):
         dontWant = [3753, 4122, 4622, 3202]
         inputSemester = [0, 1, 2]
         p = cspbAlg.multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)
-        self.assertEqual(p, ({0: [3022, 2820, 4502], 1: [3403, 3302], 2: [3155], "That's it!": "You've taken all the courses you need to graduate."}), "test_case_26 error")
+        self.assertEqual(p, ({0: [3022, 2820, 4502], 1: [3403, 3302], 2: [3155]}), "test_case_26 error")
   
     def test_case_27(self): 
         # personal version for multiple - 25h
@@ -279,7 +279,7 @@ class CSPBTest(unittest.TestCase):
         dontWant = [3753, 4122, 4622, 3202]
         inputSemester = [0, 1, 2]
         p = cspbAlg.multipleSemesters(input, inputHours, inputElectives, inputSemester, dontWant)
-        self.assertEqual(p, ({0: [3022, 2820], 1: [3403, 3302, 4502], 2: [3155], "That's it!": "You've taken all the courses you need to graduate."}), "test_case_27 error")
+        self.assertEqual(p, ({0: [3022, 2820], 1: [3403, 3302, 4502], 2: [3155]}), "test_case_27 error")
     
     def test_case_28(self):
         # valid input
@@ -712,6 +712,47 @@ class CSPBTest(unittest.TestCase):
         course = 3302
         p = cspbAlg.preReqChecker(input, take, course)
         self.assertEqual(p, (False), "test_case_82 error")
+    
+    def test_case_83(self):
+        # testing overload of dontWant 
+        input = [1300, 2824, 2270, 3104, 3308, 2400, 3155, 3753] 
+        inputHours = 20
+        inputElectives = [] 
+        dontWant = [3702, 3403, 4502, 2820, 3022, 4122]
+        inputSemester = 0
+        p = cspbAlg.basicAlg(input, inputHours, inputElectives, inputSemester, dontWant)
+        self.assertEqual(p, ([3287, 3702, 4502], 39), "test_case_83 error")
+
+    def test_case_84(self):
+        # testing overload of dontWant
+        input = [1300, 2824, 2270, 3104, 3308, 2400, 3155, 3753, 3287, 3702] 
+        inputHours = 30
+        inputElectives = [4622] 
+        dontWant = [3702, 3403, 4502, 2820, 3022, 4122]
+        inputSemester = 0
+        p = cspbAlg.basicAlg(input, inputHours, inputElectives, inputSemester, dontWant)
+        self.assertEqual(p, ([3022, 2820], 42), "test_case_84 error")
+    
+    def test_case_85(self):
+        # testing overload of dontWant
+        input = [1300, 2824, 2270, 3104, 3308, 2400, 3155, 3753, 3287, 3702, 3022, 2820] 
+        inputHours = 30
+        inputElectives = [4622] 
+        dontWant = [3702, 3403, 4502, 2820, 3022, 4122]
+        inputSemester = 1
+        p = cspbAlg.basicAlg(input, inputHours, inputElectives, inputSemester, dontWant)
+        self.assertEqual(p, ([4622], 45), "test_case_85 error")
+
+    def test_case_86(self):
+        # testing overload of dontWant
+        input = [1300, 2824, 3702, 2270, 3308, 4122, 3104, 2820, 2400, 4502, 3155, 3287]
+        inputHours = 30
+        inputElectives = [3022] 
+        dontWant = []
+        inputSemester = 5
+        p = cspbAlg.basicAlg(input, inputHours, inputElectives, inputSemester, dontWant)
+        self.assertEqual(p, ([3403], 45), "test_case_86 error")
+
     
 
     
