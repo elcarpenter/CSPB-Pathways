@@ -6,6 +6,8 @@ from flask_migrate import Migrate
 
 
 app = Flask(__name__)
+# Fixed warning when flask starts
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config.from_object(Config)
 # add secret key to config file later
 app.config['SECRET_KEY'] = 'any secret string'
