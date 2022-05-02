@@ -42,11 +42,11 @@
         <input type="checkbox" value="18" name="mycheckbox"> CSPB 3287 Database Systems&nbsp;
         <br>
         <br>
-        <h5>How many hours do you want to spend per week? (Courses commitments range between 5 and 20 hours per week.)</h5>
+        <h5>How many hours do you want to spend per week? (Course commitments range between 5 and 20 hours per class per week.)</h5>
         <input type="number" id="hour_to" name="hour_to_have" min = 0 max = 100 maxlength="4" size="4" value="{{ request.form['hours'] }}">
         <br>
         <br>
-        <h5>Elective Classes want to take (up to 21 credits):</h5>
+        <h5>Elective Classes want to take (up to 21 credits, including what you've already taken):</h5>
         <form method="POST" action="/plan">
         <input type="checkbox" value="3702" name="mycheckbox_elect"> CSPB 3702 Cognitive Science (3 credits)&nbsp;
         <br>
